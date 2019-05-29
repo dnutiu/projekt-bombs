@@ -4,14 +4,11 @@ using UnityEngine;
 
 namespace src.Player
 {
-    public class Player : PlayerBase
+    public class PlayerController : PlayerBase
     {
-        /* Movement */
-        private Rigidbody2D _rigidbody2d;
-
         private void Start()
         {
-            _rigidbody2d = GetComponent<Rigidbody2D>();
+            base.Start();
         }
 
         private void Update()
@@ -37,7 +34,7 @@ namespace src.Player
 
             var movementVector = new Vector2(horizontal, vertical);
 
-            _rigidbody2d.position += movementSpeed * Time.deltaTime * movementVector;
+            Rigidbody2d.position += movementSpeed * Time.deltaTime * movementVector;
 #elif UNITY_IOS || UNITY_ANDROID
     // Phone movement is not supported yet.
 #elif UNITY_PS4 || UNITY_XBOXONE
