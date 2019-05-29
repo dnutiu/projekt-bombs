@@ -134,9 +134,6 @@ fabric.properties
 [Bb]uilds/
 [Ll]ogs/
 
-# Never ignore Asset meta data
-![Aa]ssets/**/*.meta
-
 # Uncomment this line if you wish to ignore the asset store tools plugin
 # [Aa]ssets/AssetStoreTools*
 
@@ -528,5 +525,8 @@ healthchecksdb
 
 # Backup folder for Package Reference Convert tool in Visual Studio 2017
 MigrationBackup/
+
+# Never ignore Asset meta data
+![Aa]ssets/**/*.meta
 
 # End of https://www.gitignore.io/api/unity,rider,jetbrains,visualstudio,visualstudiocode
