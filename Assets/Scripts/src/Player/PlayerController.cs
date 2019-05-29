@@ -6,7 +6,7 @@ namespace src.Player
 {
     public class PlayerController : PlayerBase
     {
-        private void Start()
+        protected new void Start()
         {
             base.Start();
         }
