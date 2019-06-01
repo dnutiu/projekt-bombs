@@ -6,9 +6,14 @@ namespace src.Player
 {
     public class PlayerController : PlayerBase
     {
+        public Transform respawnPosition;
+
         protected new void Start()
         {
             base.Start();
+            
+            /* Always start at the starting point. */
+            Respawn();
         }
 
         private void Update()
@@ -40,6 +45,11 @@ namespace src.Player
 #elif UNITY_PS4 || UNITY_XBOXONE
     // Console movement is not supported yet.
 #endif
+        }
+
+        private void Respawn()
+        {
+            transform.position = respawnPosition.position;
         }
     }
 }
