@@ -54,12 +54,9 @@ namespace src.Player
 
         private void PlaceBomb()
         {
-            if (bombPrefab)
-            {
-                Instantiate(bombPrefab, new Vector3(Mathf.RoundToInt(playerTransform.position.x),
-                    bombPrefab.transform.position.y, Mathf.RoundToInt(playerTransform.position.z)),
-                    bombPrefab.transform.rotation);
-            }
+            Instantiate(bombPrefab, new Vector3(Mathf.RoundToInt(playerTransform.position.x),
+                bombPrefab.transform.position.y, Mathf.RoundToInt(playerTransform.position.z)),
+                bombPrefab.transform.rotation);          
         }
 
         private void HandleBomb()
