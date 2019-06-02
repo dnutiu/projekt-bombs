@@ -54,12 +54,18 @@ namespace src.Player
 
         private void PlaceBomb()
         {
+#if UNITY_EDITOR || UNITY_STANDALONE || UNITY_WEBGL
             if (bombPrefab)
             {
                 Instantiate(bombPrefab, new Vector3(Mathf.RoundToInt(playerTransform.position.x),
                     bombPrefab.transform.position.y, Mathf.RoundToInt(playerTransform.position.z)),
                     bombPrefab.transform.rotation);
             }
+#elif UNITY_IOS || UNITY_ANDROID
+            // Phone movement is not supported yet.
+#elif UNITY_PS4 || UNITY_XBOXONE
+            // Console movement is not supported yet.
+#endif
         }
 
         private void HandleBomb()
