@@ -6,6 +6,14 @@ namespace src.Player
 {
     public class PlayerController : PlayerBase
     {
+
+        public GameObject bombPrefab;
+
+        Transform playerTransform;
+
+        //O sa fie mai tarziu folosita cand o sa avem numar de bombe allowed
+        bool canPlaceBombs = true;
+
         protected new void Start()
         {
             base.Start();
@@ -14,6 +22,7 @@ namespace src.Player
         private void Update()
         {
             HandleMovement();
+            HandleBomb();
         }
 
         private void HandleMovement()
@@ -35,11 +44,30 @@ namespace src.Player
             var movementVector = new Vector2(horizontal, vertical);
 
             Rigidbody2d.position += movementSpeed * Time.deltaTime * movementVector;
+            playerTransform.position = movementVector;
 #elif UNITY_IOS || UNITY_ANDROID
     // Phone movement is not supported yet.
 #elif UNITY_PS4 || UNITY_XBOXONE
     // Console movement is not supported yet.
 #endif
+        }
+
+        private void PlaceBomb()
+        {
+            if (bombPrefab)
+            {
+                Instantiate(bombPrefab, new Vector3(Mathf.RoundToInt(playerTransform.position.x),
+                    bombPrefab.transform.position.y, Mathf.RoundToInt(playerTransform.position.z)),
+                    bombPrefab.transform.rotation);
+            }
+        }
+
+        private void HandleBomb()
+        {
+            if (canPlaceBombs && Input.GetKeyDown(KeyCode.Space))
+            {
+                PlaceBomb();
+            }
         }
     }
 }
