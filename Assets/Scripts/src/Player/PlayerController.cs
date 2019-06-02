@@ -19,9 +19,13 @@ namespace src.Player
             Respawn();
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
             HandleMovement();
+        }
+
+        private void Update()
+        {
             HandleBomb();
         }
 
