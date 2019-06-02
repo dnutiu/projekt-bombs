@@ -8156,7 +8156,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10.029009, y: -4.0430503, z: -2.7893844}
+  m_LocalPosition: {x: 10.241558, y: -4.0430503, z: -2.7893844}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -8242,7 +8242,6 @@ MonoBehaviour:
     type: 3}
   destructibleWallPrefab: {fileID: 4177940729222266681, guid: da559e681f8d34d58bb5f3457045664a,
     type: 3}
-  enemyPrefabs: []
   boardHolder: {fileID: 585332173}
 --- !u!4 &840487112
 Transform:
@@ -8356,6 +8355,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSpeed: 4
   respawnPosition: {fileID: 185746015}
+  bombPrefab: {fileID: 5909392949477884267, guid: 28467e0d65b5d3844bf1862ac0c49ad9,
+    type: 3}
 --- !u!212 &1352658976
 SpriteRenderer:
   m_ObjectHideFlags: 0
