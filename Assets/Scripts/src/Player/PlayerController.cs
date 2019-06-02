@@ -11,15 +11,10 @@ namespace src.Player
 
         public GameObject bombPrefab;
 
-        Transform playerTransform;
-
-        //O sa fie mai tarziu folosita cand o sa avem numar de bombe allowed
-        bool canPlaceBombs = true;
-
         protected new void Start()
         {
             base.Start();
-            
+
             /* Always start at the starting point. */
             Respawn();
         }
@@ -49,7 +44,6 @@ namespace src.Player
             var movementVector = new Vector2(horizontal, vertical);
 
             Rigidbody2d.position += movementSpeed * Time.deltaTime * movementVector;
-            playerTransform.position = movementVector;
 #elif UNITY_IOS || UNITY_ANDROID
     // Phone movement is not supported yet.
 #elif UNITY_PS4 || UNITY_XBOXONE
@@ -59,15 +53,15 @@ namespace src.Player
 
         private void PlaceBomb()
         {
-            Instantiate(bombPrefab, new Vector3(Mathf.RoundToInt(playerTransform.position.x),
-                bombPrefab.transform.position.y, Mathf.RoundToInt(playerTransform.position.z)),
-                bombPrefab.transform.rotation);          
+            Instantiate(bombPrefab, new Vector3(Mathf.RoundToInt(transform.position.x),
+                    bombPrefab.transform.position.y, 0f),
+                bombPrefab.transform.rotation);
         }
 
         private void HandleBomb()
         {
 #if UNITY_EDITOR || UNITY_STANDALONE || UNITY_WEBGL
-            if (canPlaceBombs && Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space))
             {
                 PlaceBomb();
             }
