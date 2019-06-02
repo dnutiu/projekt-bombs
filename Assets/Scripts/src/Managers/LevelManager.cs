@@ -56,19 +56,19 @@ namespace src.Managers
                 {
                     /* We want the following positions to be a safe zone. */
                     /* Don't place anything on starting position */
-                    if (Math.Abs(x) < 0.001 && Math.Abs(y) < 0.001)
+                    if (Mathf.FloorToInt(x) == 0 && Mathf.FloorToInt(y) == 0)
                     {
                         continue;
                     }
 
                     /* Don't place anything on X=1 and Y=0 */
-                    if (Math.Abs(x - 1) < 0.001 && Math.Abs(y) < 0.001)
+                    if (Mathf.FloorToInt(x) == 1 && Mathf.FloorToInt(y) == 0)
                     {
                         continue;
                     }
 
                     /* Don't place anything on X=0 and Y=1 */
-                    if (Math.Abs(x) < 0.001 && Math.Abs(y - 1) < 0.001)
+                    if (Mathf.FloorToInt(x) == 0 && Mathf.FloorToInt(y) == 1)
                     {
                         continue;
                     }
