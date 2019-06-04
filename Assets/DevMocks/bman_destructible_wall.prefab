@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4177940729222266820}
   - component: {fileID: 4177940729222266823}
   - component: {fileID: 4177940729222266822}
+  - component: {fileID: 2823577682722293689}
   m_Layer: 0
   m_Name: bman_destructible_wall
   m_TagString: Untagged
@@ -128,3 +129,15 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &2823577682722293689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4177940729222266681}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b30e7124fcdf4e1f92fc7dd42d8c7298, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

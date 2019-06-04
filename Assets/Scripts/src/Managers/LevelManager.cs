@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using src.Base;
 using src.Helpers;
+using src.Wall;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -19,6 +19,11 @@ namespace src.Managers
                 Min = min;
                 Max = max;
             }
+
+            public int RandomIntRange()
+            {
+                return Mathf.FloorToInt(Random.Range(Min, Max));
+            }
         }
 
         public int columns = 30;
@@ -26,6 +31,7 @@ namespace src.Managers
 
         /* Specifies how many objects we want per level. */
         public Count destructibleWallCount = new Count(150, 350);
+        public Count upgradesCount = new Count(0, 5);
         public Count enemyCount = new Count(20, 50);
 
         /* Holds the starting position of the player */
@@ -37,18 +43,39 @@ namespace src.Managers
         public Transform boardHolder;
 
         /* Holds the available positions */
-        private readonly List<Vector3> _gridPositions = new List<Vector3>();
+        private readonly List<Vector3> _freeGridPositions = new List<Vector3>();
+        private readonly List<GameObject> _destructibleWalls = new List<GameObject>();
 
         /* Test only */
         public void Awake()
         {
             InitBoard();
             SetupLevel();
+            SetupExit();
+            SetupUpgrades();
+        }
+
+        private void SetupUpgrades()
+        {
+            var count = upgradesCount.RandomIntRange();
+            for (var i = 0; i < count; i++)
+            {
+                /* Get the destructible wall script and make it to spawn the upgrade */
+                var wall = _destructibleWalls.PopRandom().GetComponent<DestructibleWall>();
+                wall.SpawnsUpgrade();
+            }
+        }
+
+        private void SetupExit()
+        {
+            /* Get the destructible wall script and make it to spawn the exit */
+            var wall = _destructibleWalls.PopRandom().GetComponent<DestructibleWall>();
+            wall.SpawnsExit();
         }
 
         public void InitBoard()
         {
-            _gridPositions.Clear();
+            _freeGridPositions.Clear();
             /* We want to iterate over the X axis taking into consideration the startPosition's offset */
             for (var x = startPosition.position.x; x < columns; x++)
             {
@@ -56,19 +83,19 @@ namespace src.Managers
                 {
                     /* We want the following positions to be a safe zone. */
                     /* Don't place anything on starting position */
-                    if (Mathf.FloorToInt(x) == 0 && Mathf.FloorToInt(y) == 0)
+                    if (Mathf.RoundToInt(x) == 0 && Mathf.RoundToInt(y) == 0)
                     {
                         continue;
                     }
 
                     /* Don't place anything on X=1 and Y=0 */
-                    if (Mathf.FloorToInt(x) == 1 && Mathf.FloorToInt(y) == 0)
+                    if (Mathf.RoundToInt(x) == 1 && Mathf.RoundToInt(y) == 0)
                     {
                         continue;
                     }
 
                     /* Don't place anything on X=0 and Y=1 */
-                    if (Mathf.FloorToInt(x) == 0 && Mathf.FloorToInt(y) == 1)
+                    if (Mathf.RoundToInt(x) == 0 && Mathf.RoundToInt(y) == -1)
                     {
                         continue;
                     }
@@ -80,7 +107,7 @@ namespace src.Managers
                     }
 
                     /* Add position to _gridPositions */
-                    _gridPositions.Add(new Vector3(x, y, 0f));
+                    _freeGridPositions.Add(new Vector3(x, y, 0f));
                 }
             }
         }
@@ -88,16 +115,16 @@ namespace src.Managers
         public void SetupLevel()
         {
             var random = new Random();
-            var numberOfDestructilbeWallsToPlace =
-                Mathf.FloorToInt(Random.Range(destructibleWallCount.Min, destructibleWallCount.Max));
+            var numberOfDestructilbeWallsToPlace = destructibleWallCount.RandomIntRange();
 
-            _gridPositions.ShuffleList();
-            foreach (var nextPosition in _gridPositions)
+            _freeGridPositions.ShuffleList();
+            foreach (var nextPosition in _freeGridPositions)
             {
                 if (numberOfDestructilbeWallsToPlace == 0)
                 {
                     break;
                 }
+
                 PlaceDestructibleTile(nextPosition);
                 numberOfDestructilbeWallsToPlace -= 1;
             }
@@ -106,13 +133,15 @@ namespace src.Managers
         private void PlaceDestructibleTile(Vector3 position)
         {
             var instance = Instantiate(destructibleWallPrefab, position, Quaternion.identity);
+            _destructibleWalls.Add(instance);
             instance.transform.SetParent(boardHolder);
         }
 
         private bool PlaceIndestructibleTile(float x, float y)
         {
-            var absX = Mathf.FloorToInt(x);
-            var absY = Mathf.FloorToInt(y);
+            Debug.Log($"PlaceIndestructibleTile: x:{x} y:{y}");
+            var absX = Mathf.RoundToInt(x);
+            var absY = Mathf.RoundToInt(y);
 
             if (absX % 2 == 0 || absY % 2 == 0) return false;
 
