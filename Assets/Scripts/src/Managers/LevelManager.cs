@@ -76,9 +76,10 @@ namespace src.Managers
                     Debug.LogWarning("No destructible walls left, cannot spawn upgrade.");
                     continue;
                 }
-                
+
                 /* Get the destructible wall script and make it to spawn the upgrade */
                 var wall = _destructibleWalls.PopRandom().GetComponent<DestructibleWall>();
+                Debug.Log($"Spawned upgrade at: x:{wall.XCoordinate} y:{wall.YCoordinate}");
                 wall.SpawnsUpgrade();
             }
         }
@@ -90,8 +91,10 @@ namespace src.Managers
                 Debug.LogWarning("No destructible walls found, cannot spawn exit!");
                 return;
             }
+
             /* Get the destructible wall script and make it to spawn the exit */
             var wall = _destructibleWalls.PopRandom().GetComponent<DestructibleWall>();
+            Debug.Log($"Spawned exit at: x:{wall.XCoordinate} y:{wall.YCoordinate}");
             wall.SpawnsExit();
         }
 
@@ -156,6 +159,7 @@ namespace src.Managers
 
         private void PlaceDestructibleTile(Vector3 position)
         {
+            Debug.Log($"PlaceDestructibleTile: x:{position.x} y:{position.y}");
             var instance = Instantiate(destructibleWallPrefab, position, Quaternion.identity);
             _destructibleWalls.Add(instance);
             instance.transform.SetParent(boardHolder);
