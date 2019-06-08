@@ -11,11 +11,7 @@ public sealed class BombStatsUtil
 
     public float Timer { get; } = 3.0f;
 
-    // Explicit static constructor to tell C# compiler
-    // not to mark type as beforefieldinit
-    static BombStatsUtil()
-    {
-    }
+    public float ExplosionDuration { get; } = 0.55f;
 
     private BombStatsUtil()
     {

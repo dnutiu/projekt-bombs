@@ -1,6 +1,7 @@
 ﻿using System;
 using src.Base;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 namespace src.Player
 {
@@ -8,8 +9,9 @@ namespace src.Player
     {
         public Transform respawnPosition;
 
-
         public GameObject bombPrefab;
+
+        public Tilemap tilemap;
 
         protected new void Start()
         {
@@ -56,10 +58,11 @@ namespace src.Player
         }
 
         private void PlaceBomb()
-        {
-            Instantiate(bombPrefab, new Vector3(Mathf.RoundToInt(transform.position.x),
-                    bombPrefab.transform.position.y, 0f),
-                bombPrefab.transform.rotation);
+        {           
+            Vector3Int cell = tilemap.WorldToCell(transform.position);
+            Vector3 cellCenterPos = tilemap.GetCellCenterWorld(cell);
+
+            Instantiate(bombPrefab, cellCenterPos, Quaternion.identity);
         }
 
         private void HandleBomb()
@@ -79,6 +82,15 @@ namespace src.Player
         private void Respawn()
         {
             transform.position = respawnPosition.position;
+        }
+
+        public void OnTriggerExit2D(Collider2D other)
+        {
+            if (other.CompareTag("Bomb"))
+            {
+                
+                other.isTrigger = false;
+            }
         }
     }
 }

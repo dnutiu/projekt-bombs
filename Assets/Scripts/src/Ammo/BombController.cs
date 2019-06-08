@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BombController : MonoBehaviour
+public class BombController : MonoBehaviour, IExplosable
 {
- 
-    public LayerMask levelMask;
     public GameObject explosionPrefab;
 
     BombStatsUtil bombStatsUtil = BombStatsUtil.Instance;
@@ -21,62 +19,40 @@ public class BombController : MonoBehaviour
     {
         Instantiate(explosionPrefab, transform.position, Quaternion.identity);
 
+        GetComponent<SpriteRenderer>().enabled = false;
         transform.Find("2DCollider").gameObject.SetActive(false);
 
-        //StartCoroutine(CreateExplosions(Vector3.up));
-        //StartCoroutine(CreateExplosions(Vector3.down));
-        //StartCoroutine(CreateExplosions(Vector3.left));
-        //StartCoroutine(CreateExplosions(Vector3.right));
-
-        CreateExplosions(Vector3.up);
-        CreateExplosions(Vector3.down);
-        CreateExplosions(Vector3.left);
-        CreateExplosions(Vector3.right);
-
-        GetComponent<SpriteRenderer>().enabled = false;
+        StartCoroutine(CreateExplosions(Vector3.down));
+        StartCoroutine(CreateExplosions(Vector3.left));
+        StartCoroutine(CreateExplosions(Vector3.up));
+        StartCoroutine(CreateExplosions(Vector3.right));
+      
         exploded = true;
+        Destroy(gameObject, 0.3f);
+        //GameObject bombObject = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+        //bombObject.GetComponent<Explosion>().Explode(transform.position);
 
-        //Destroy(gameObject, 0.3f);
         Destroy(gameObject);
     }
 
-    //private IEnumerator CreateExplosions(Vector3 direction)
-    //{
-    //    for (int i = 1; i < bombStatsUtil.Power; i++)
-    //    {
-    //        RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(0, .5f, 0), direction, i, levelMask);
-
-    //        if (!hit.collider)
-    //        {
-    //            Instantiate(explosionPrefab, transform.position + (i * direction), explosionPrefab.transform.rotation);
-    //        }
-    //        else
-    //        {
-    //            break;
-    //        }
-
-    //    }
-
-    //    yield return new WaitForSeconds(0.05f);
-
-    //}
-
-    private void CreateExplosions(Vector3 direction)
+    private IEnumerator CreateExplosions(Vector3 direction)
     {
         for (int i = 1; i < bombStatsUtil.Power; i++)
         {
-            RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(0, .5f, 0), direction, i, levelMask);
-
+            RaycastHit2D hit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y), direction, i, 1 << 8);
             if (!hit.collider)
             {
                 Instantiate(explosionPrefab, transform.position + (i * direction), explosionPrefab.transform.rotation);
             }
             else
             {
+                Debug.Log("Collided with something");
                 break;
             }
 
         }
+
+        yield return new WaitForSeconds(0.05f);
 
     }
 
@@ -84,9 +60,14 @@ public class BombController : MonoBehaviour
     {
         if (!exploded && other.CompareTag("Explosion"))
         {
-            //In caz ca o bomba loveste bomba, dam cancel la explozie sa nu explodeze twice si o explodam automagic
-            CancelInvoke("Explode");
-            Explode();
+            onExplosion();
         }
+    }
+
+    public void onExplosion()
+    {
+        //In caz ca o bomba loveste bomba, dam cancel la explozie sa nu explodeze twice si o explodam automagic
+        CancelInvoke("Explode");
+        Explode();
     }
 }

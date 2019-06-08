@@ -126,7 +126,7 @@ GameObject:
   - component: {fileID: 69346944}
   - component: {fileID: 69346946}
   - component: {fileID: 69346945}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Tilemap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -141,7 +141,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 69346940}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.5, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 585332173}
@@ -8018,7 +8018,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 266944714}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -2.7893844}
+  m_LocalPosition: {x: 0.51, y: 0.06, z: -2.7893844}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 97386695}
@@ -8156,7 +8156,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10.241558, y: -4.0430503, z: -2.7893844}
+  m_LocalPosition: {x: 7.777341, y: -4.0430503, z: -2.7893844}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -8357,6 +8357,7 @@ MonoBehaviour:
   respawnPosition: {fileID: 185746015}
   bombPrefab: {fileID: 5909392949477884267, guid: 28467e0d65b5d3844bf1862ac0c49ad9,
     type: 3}
+  tilemap: {fileID: 69346943}
 --- !u!212 &1352658976
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -8413,7 +8414,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1352658974}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 7.2106156}
+  m_LocalPosition: {x: 0.51, y: 0.06, z: 7.2106156}
   m_LocalScale: {x: 1, y: 1, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
