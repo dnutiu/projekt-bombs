@@ -11,8 +11,6 @@ namespace src.Player
 
         public GameObject bombPrefab;
 
-        public Tilemap tilemap;
-
         protected new void Start()
         {
             base.Start();
@@ -59,10 +57,9 @@ namespace src.Player
 
         private void PlaceBomb()
         {           
-            Vector3Int cell = tilemap.WorldToCell(transform.position);
-            Vector3 cellCenterPos = tilemap.GetCellCenterWorld(cell);
-
-            Instantiate(bombPrefab, cellCenterPos, Quaternion.identity);
+            var absX = Mathf.RoundToInt(transform.position.x);
+            var absY = Mathf.RoundToInt(transform.position.y);
+            Instantiate(bombPrefab, new Vector3(absX, absY, 0), Quaternion.identity);
         }
 
         private void HandleBomb()

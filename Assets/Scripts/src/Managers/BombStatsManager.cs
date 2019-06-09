@@ -1,10 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
-public sealed class BombStatsUtil
+public sealed class BombStatsManager
 {
     
-    private static readonly BombStatsUtil instance = new BombStatsUtil();
+    private static readonly BombStatsManager instance = new BombStatsManager();
     const int MAX_POWER = 7;
 
     public int Power { get; private set; } = 3;
@@ -13,11 +13,11 @@ public sealed class BombStatsUtil
 
     public float ExplosionDuration { get; } = 0.55f;
 
-    private BombStatsUtil()
+    private BombStatsManager()
     {
     }
 
-    public static BombStatsUtil Instance
+    public static BombStatsManager Instance
     {
         get
         {

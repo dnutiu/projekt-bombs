@@ -6,7 +6,7 @@ public class BombController : MonoBehaviour, IExplosable
 {
     public GameObject explosionPrefab;
 
-    BombStatsUtil bombStatsUtil = BombStatsUtil.Instance;
+    BombStatsManager bombStatsUtil = BombStatsManager.Instance;
     bool exploded = false;
 
     // Start is called before the first frame update
@@ -29,10 +29,6 @@ public class BombController : MonoBehaviour, IExplosable
       
         exploded = true;
         Destroy(gameObject, 0.3f);
-        //GameObject bombObject = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
-        //bombObject.GetComponent<Explosion>().Explode(transform.position);
-
-        Destroy(gameObject);
     }
 
     private IEnumerator CreateExplosions(Vector3 direction)
@@ -46,7 +42,6 @@ public class BombController : MonoBehaviour, IExplosable
             }
             else
             {
-                Debug.Log("Collided with something");
                 break;
             }
 
