@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class Explosion : MonoBehaviour
 {
+    BombStatsManager bombUtil = BombStatsManager.Instance;
 
     public void Start()
     {
-        Destroy(gameObject, 1);
+        Destroy(gameObject, bombUtil.ExplosionDuration);
     }
-
 }

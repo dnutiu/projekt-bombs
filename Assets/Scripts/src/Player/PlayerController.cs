@@ -1,13 +1,13 @@
 ﻿using System;
 using src.Base;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 namespace src.Player
 {
     public class PlayerController : PlayerBase
     {
         public Transform respawnPosition;
-
 
         public GameObject bombPrefab;
 
@@ -56,10 +56,10 @@ namespace src.Player
         }
 
         private void PlaceBomb()
-        {
-            Instantiate(bombPrefab, new Vector3(Mathf.RoundToInt(transform.position.x),
-                    bombPrefab.transform.position.y, 0f),
-                bombPrefab.transform.rotation);
+        {           
+            var absX = Mathf.RoundToInt(transform.position.x);
+            var absY = Mathf.RoundToInt(transform.position.y);
+            Instantiate(bombPrefab, new Vector3(absX, absY, 0), Quaternion.identity);
         }
 
         private void HandleBomb()
@@ -79,6 +79,15 @@ namespace src.Player
         private void Respawn()
         {
             transform.position = respawnPosition.position;
+        }
+
+        public void OnTriggerExit2D(Collider2D other)
+        {
+            if (other.CompareTag("Bomb"))
+            {
+                
+                other.isTrigger = false;
+            }
         }
     }
 }

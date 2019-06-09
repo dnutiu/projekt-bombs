@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4177940729222266823}
   - component: {fileID: 4177940729222266822}
   - component: {fileID: 2823577682722293689}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: bman_destructible_wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
