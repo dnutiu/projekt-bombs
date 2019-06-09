@@ -534,5 +534,6 @@ MigrationBackup/
 
 # Never ignore Asset meta data
 ![Aa]ssets/**/*.meta
+Assets/Plugins/Editor/JetBrains.meta
 
 # End of https://www.gitignore.io/api/unity,rider,jetbrains,visualstudio,visualstudiocode
