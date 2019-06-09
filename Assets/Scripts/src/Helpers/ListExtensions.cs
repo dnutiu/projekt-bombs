@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace src.Helpers
@@ -12,12 +13,20 @@ namespace src.Helpers
             for (var i = min; i < max; i++)
             {
                 var randomPos = Mathf.FloorToInt(Random.Range(min, max));
-                
+
                 /* Swap elements in list */
                 var aux = list[randomPos];
                 list[randomPos] = list[i];
                 list[i] = aux;
             }
+        }
+
+        public static T PopRandom<T>(this IList<T> list)
+        {
+            var randomIndex = Mathf.FloorToInt(Random.Range(0, list.Count - 1));
+            var elem = list[randomIndex];
+            list.RemoveAt(randomIndex);
+            return elem;
         }
     }
 }

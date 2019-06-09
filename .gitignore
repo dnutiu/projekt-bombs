@@ -140,6 +140,9 @@ fabric.properties
 # Uncomment this line if you wish to ignore the asset store tools plugin
 # [Aa]ssets/AssetStoreTools*
 
+# Ignore Rider Plugin
+[Aa]ssets/Plugins/Editor/JetBrains/*
+
 # TextMesh Pro files
 [Aa]ssets/TextMesh*Pro/
 
