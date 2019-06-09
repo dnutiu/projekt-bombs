@@ -25,7 +25,7 @@ namespace src.Base
 
         public void onExplosion()
         {
-           // Debug.Log("Player hit by explosion");
+            Debug.Log("Player hit by explosion");
         }
     }
 }
