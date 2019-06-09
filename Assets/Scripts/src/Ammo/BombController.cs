@@ -1,68 +1,72 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
+using src.Managers;
 using UnityEngine;
 
-public class BombController : MonoBehaviour, IExplosable
+namespace src.Ammo
 {
-    public GameObject explosionPrefab;
-
-    BombStatsManager bombStatsUtil = BombStatsManager.Instance;
-    bool exploded = false;
-
-    // Start is called before the first frame update
-    void Start()
+    public class BombController : MonoBehaviour, IExplosable
     {
-        Invoke("Explode", bombStatsUtil.Timer);
-    }
+        public GameObject explosionPrefab;
 
-    void Explode()
-    {
-        Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+        private readonly BombStatsManager _bombStatsUtil = BombStatsManager.Instance;
+        private bool _exploded;
 
-        GetComponent<SpriteRenderer>().enabled = false;
-        transform.Find("2DCollider").gameObject.SetActive(false);
-
-        StartCoroutine(CreateExplosions(Vector3.down));
-        StartCoroutine(CreateExplosions(Vector3.left));
-        StartCoroutine(CreateExplosions(Vector3.up));
-        StartCoroutine(CreateExplosions(Vector3.right));
-      
-        exploded = true;
-        Destroy(gameObject, 0.3f);
-    }
-
-    private IEnumerator CreateExplosions(Vector3 direction)
-    {
-        for (int i = 1; i < bombStatsUtil.Power; i++)
+        // Start is called before the first frame update
+        void Start()
         {
-            RaycastHit2D hit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y), direction, i, 1 << 8);
-            if (!hit.collider)
-            {
-                Instantiate(explosionPrefab, transform.position + (i * direction), explosionPrefab.transform.rotation);
-            }
-            else
-            {
-                break;
-            }
-
+            Invoke(nameof(Explode), _bombStatsUtil.Timer);
         }
 
-        yield return new WaitForSeconds(0.05f);
-
-    }
-
-    public void OnTriggerEnter2D(Collider2D other)
-    {
-        if (!exploded && other.CompareTag("Explosion"))
+        void Explode()
         {
-            onExplosion();
-        }
-    }
+            Instantiate(explosionPrefab, transform.position, Quaternion.identity);
 
-    public void onExplosion()
-    {
-        //In caz ca o bomba loveste bomba, dam cancel la explozie sa nu explodeze twice si o explodam automagic
-        CancelInvoke("Explode");
-        Explode();
+            GetComponent<SpriteRenderer>().enabled = false;
+            transform.Find("2DCollider").gameObject.SetActive(false);
+
+            StartCoroutine(CreateExplosions(Vector3.down));
+            StartCoroutine(CreateExplosions(Vector3.left));
+            StartCoroutine(CreateExplosions(Vector3.up));
+            StartCoroutine(CreateExplosions(Vector3.right));
+
+            _exploded = true;
+            Destroy(gameObject, 0.3f);
+        }
+
+        private IEnumerator CreateExplosions(Vector3 direction)
+        {
+            for (int i = 1; i < _bombStatsUtil.Power; i++)
+            {
+                RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, i,
+                    1 << 8);
+                if (!hit.collider)
+                {
+                    Instantiate(explosionPrefab, transform.position + i * direction, 
+                        explosionPrefab.transform.rotation);
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            yield return new WaitForSeconds(0.05f);
+        }
+
+        public void OnTriggerEnter2D(Collider2D other)
+        {
+            if (!_exploded && other.CompareTag("Explosion"))
+            {
+                onExplosion();
+            }
+        }
+
+        public void onExplosion()
+        {
+            // In caz ca o bomba loveste bomba, dam cancel la explozie
+            // sa nu explodeze twice si o explodam automagic
+            CancelInvoke(nameof(Explode));
+            Explode();
+        }
     }
 }
