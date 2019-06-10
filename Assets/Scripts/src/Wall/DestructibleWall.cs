@@ -1,8 +1,10 @@
+using UnityEngine;
+
 using src.Base;
 
 namespace src.Wall
 {
-    public class DestructibleWall : GameplayComponent
+    public class DestructibleWall : GameplayComponent, IExplosable
     {
         private bool _spawnExit;
         private bool _spawnUpgrade;
@@ -31,6 +33,11 @@ namespace src.Wall
                 // TODO Spawn an upgrade, use composition to UpgradeManager
                 // to get random / desired upgrade
             }
+        }
+
+        public void onExplosion()
+        {
+            Debug.Log("Destructible wall hitted by explosion");
         }
     }
 }

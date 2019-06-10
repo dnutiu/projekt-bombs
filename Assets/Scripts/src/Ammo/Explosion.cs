@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Explosion : MonoBehaviour
 {
-    private readonly BombStatsManager _bombUtil = BombStatsManager.Instance;
+    private readonly BombsUtilManager _bombUtil = BombsUtilManager.Instance;
 
     public void Start()
     {
