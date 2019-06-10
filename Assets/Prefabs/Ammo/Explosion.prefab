@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 105666002419767893}
   - component: {fileID: 2976769454423190410}
   - component: {fileID: 5317321277803550577}
+  - component: {fileID: 2410738329680383200}
   m_Layer: 0
   m_Name: Explosion
   m_TagString: Explosion
@@ -70,7 +71,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 9
-  m_Sprite: {fileID: 21300004, guid: 07d05f8fcd727b641baa0ccf95c8c770, type: 3}
+  m_Sprite: {fileID: 21300048, guid: 1611b607563ac5b4d919348f10e92487, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -109,8 +110,8 @@ BoxCollider2D:
   m_Offset: {x: 0.53872055, y: 0.5387204}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: -0.005050569, y: -0.0050504208}
-    oldSize: {x: 1.0666667, y: 1.0666667}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 2, y: 2}
     newSize: {x: 1.28, y: 1.28}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -119,3 +120,22 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.0666667, y: 1.0666667}
   m_EdgeRadius: 0
+--- !u!95 &2410738329680383200
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2086996798441195857}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
