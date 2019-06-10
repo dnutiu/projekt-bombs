@@ -140,8 +140,6 @@ fabric.properties
 # Uncomment this line if you wish to ignore the asset store tools plugin
 # [Aa]ssets/AssetStoreTools*
 
-# Ignore Rider Plugin
-[Aa]ssets/Plugins/Editor/JetBrains/*
 
 # TextMesh Pro files
 [Aa]ssets/TextMesh*Pro/
@@ -534,6 +532,9 @@ MigrationBackup/
 
 # Never ignore Asset meta data
 ![Aa]ssets/**/*.meta
-Assets/Plugins/Editor/JetBrains.meta
+
+# Ignore editor plugins
+Assets/Plugins/Editor/*
+[Aa]ssets/Plugins/Editor/JetBrains/*
 
 # End of https://www.gitignore.io/api/unity,rider,jetbrains,visualstudio,visualstudiocode

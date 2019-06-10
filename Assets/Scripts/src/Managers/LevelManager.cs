@@ -51,7 +51,7 @@ namespace src.Managers
         /* Holds the starting position of the player */
         public Transform startPosition;
         public GameObject indestructibleWallPrefab;
-        public GameObject destructibleWallPrefab;
+        public GameObject[] destructibleWallPrefabs;
 
         /* Specifies how many objects we want per level. */
         private Count _destructibleWallCount = new Count(150, 350);
@@ -160,7 +160,8 @@ namespace src.Managers
         private void PlaceDestructibleTile(Vector3 position)
         {
             Debug.Log($"PlaceDestructibleTile: x:{position.x} y:{position.y}");
-            var instance = Instantiate(destructibleWallPrefab, position, Quaternion.identity);
+            var randomWall = destructibleWallPrefabs.ChoseRandom();
+            var instance = Instantiate(randomWall, position, Quaternion.identity);
             _destructibleWalls.Add(instance);
             instance.transform.SetParent(boardHolder);
         }

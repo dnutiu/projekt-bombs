@@ -7781,7 +7781,7 @@ CompositeCollider2D:
   m_GameObject: {fileID: 69346940}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: dc8eb6133faaf45f6820487d0d28b47f, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -8238,10 +8238,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   boardHolder: {fileID: 585332173}
   startPosition: {fileID: 185746015}
-  indestructibleWallPrefab: {fileID: 5959564480851182330, guid: dd25aabed7c6c491eb405f1e5c5f4d99,
+  indestructibleWallPrefab: {fileID: 5996206011854593075, guid: 84b92ac1e96d940bda97d1b1125887d7,
     type: 3}
-  destructibleWallPrefab: {fileID: 4177940729222266681, guid: da559e681f8d34d58bb5f3457045664a,
-    type: 3}
+  destructibleWallPrefabs:
+  - {fileID: 4177940729222266681, guid: da559e681f8d34d58bb5f3457045664a, type: 3}
+  - {fileID: 8729402555587492036, guid: 7e54504f1e1de4334be2e6a115b838c2, type: 3}
 --- !u!4 &840487112
 Transform:
   m_ObjectHideFlags: 0
@@ -8410,5 +8411,10 @@ PrefabInstance:
       propertyPath: respawnPosition
       value: 
       objectReference: {fileID: 185746015}
+    - target: {fileID: 6843575828445418655, guid: d3055091a17dc4aa1accf2e33ccef144,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d3055091a17dc4aa1accf2e33ccef144, type: 3}
