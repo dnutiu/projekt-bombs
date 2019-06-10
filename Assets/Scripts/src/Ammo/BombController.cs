@@ -8,13 +8,13 @@ namespace src.Ammo
     {
         public GameObject explosionPrefab;
 
-        private readonly BombStatsManager _bombStatsUtil = BombStatsManager.Instance;
+        private readonly BombsUtilManager _bombsUtil = BombsUtilManager.Instance;
         private bool _exploded;
 
         // Start is called before the first frame update
         void Start()
         {
-            Invoke(nameof(Explode), _bombStatsUtil.Timer);
+            Invoke(nameof(Explode), _bombsUtil.Timer);
         }
 
         void Explode()
@@ -31,11 +31,12 @@ namespace src.Ammo
 
             _exploded = true;
             Destroy(gameObject, 0.3f);
+            _bombsUtil.RemoveBomb(transform.position);
         }
 
         private IEnumerator CreateExplosions(Vector3 direction)
         {
-            for (int i = 1; i < _bombStatsUtil.Power; i++)
+            for (int i = 1; i < _bombsUtil.Power; i++)
             {
                 RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, i,
                     1 << 8);
@@ -46,6 +47,8 @@ namespace src.Ammo
                 }
                 else
                 {
+                    var key = hit.collider.GetComponent<IExplosable>();
+                    key.onExplosion();
                     break;
                 }
             }
@@ -63,8 +66,6 @@ namespace src.Ammo
 
         public void onExplosion()
         {
-            // In caz ca o bomba loveste bomba, dam cancel la explozie
-            // sa nu explodeze twice si o explodam automagic
             CancelInvoke(nameof(Explode));
             Explode();
         }

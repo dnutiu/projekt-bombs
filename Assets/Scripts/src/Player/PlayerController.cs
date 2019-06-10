@@ -9,8 +9,6 @@ namespace src.Player
     {
         public Transform respawnPosition;
 
-        public GameObject bombPrefab;
-
         protected new void Start()
         {
             base.Start();
@@ -56,10 +54,9 @@ namespace src.Player
         }
 
         private void PlaceBomb()
-        {           
-            var absX = Mathf.RoundToInt(transform.position.x);
-            var absY = Mathf.RoundToInt(transform.position.y);
-            Instantiate(bombPrefab, new Vector3(absX, absY, 0), Quaternion.identity);
+        {
+            GameObject bombsSpawnerObject = GameObject.Find("BombSpawner");
+            bombsSpawnerObject.GetComponent<BombsSpawner>().PlaceBomb(transform);
         }
 
         private void HandleBomb()
