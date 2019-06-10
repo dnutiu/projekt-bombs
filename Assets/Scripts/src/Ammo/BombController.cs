@@ -48,7 +48,10 @@ namespace src.Ammo
                 else
                 {
                     var key = hit.collider.GetComponent<IExplosable>();
-                    key.onExplosion();
+                    if(key != null)
+                    {
+                        key.onExplosion();
+                    }                  
                     break;
                 }
             }
