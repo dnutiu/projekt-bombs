@@ -93,6 +93,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b30e7124fcdf4e1f92fc7dd42d8c7298, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  explosionPrefab: {fileID: 2086996798441195857, guid: 13213ac562d960e4e8c33d53d40a516c,
+    type: 3}
+  exitDoorPrefab: {fileID: 1538214466168189615, guid: 519235375d069406f909265766078ad0,
+    type: 3}
 --- !u!1 &5688352134163068791
 GameObject:
   m_ObjectHideFlags: 0
