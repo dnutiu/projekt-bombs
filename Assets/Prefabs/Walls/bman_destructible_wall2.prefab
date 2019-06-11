@@ -91,6 +91,7 @@ GameObject:
   - component: {fileID: 8360026854687715433}
   - component: {fileID: 1860172021824364478}
   - component: {fileID: 3937551180478767488}
+  - component: {fileID: 2850266447828806432}
   m_Layer: 8
   m_Name: bman_destructible_wall2
   m_TagString: Untagged
@@ -129,7 +130,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: dc8eb6133faaf45f6820487d0d28b47f, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -170,5 +171,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b30e7124fcdf4e1f92fc7dd42d8c7298, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  explosionPrefab: {fileID: 2086996798441195857, guid: 13213ac562d960e4e8c33d53d40a516c,
+    type: 3}
+  exitDoorPrefab: {fileID: 1538214466168189615, guid: 519235375d069406f909265766078ad0,
+    type: 3}
+--- !u!114 &2850266447828806432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8729402555587492036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f76d22fdcb894023bd111d6b5bc1da5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
