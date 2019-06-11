@@ -71,7 +71,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 69237087e6b0b42ac8d25d0035b2e01b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -97,8 +97,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSpeed: 4
   respawnPosition: {fileID: 0}
-  bombPrefab: {fileID: 5909392949477884267, guid: 28467e0d65b5d3844bf1862ac0c49ad9,
-    type: 3}
 --- !u!50 &6843575828445418653
 Rigidbody2D:
   serializedVersion: 4
