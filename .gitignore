@@ -534,7 +534,7 @@ MigrationBackup/
 ![Aa]ssets/**/*.meta
 
 # Ignore editor plugins
-Assets/Plugins/Editor/*
+Assets/Plugins/Editor*
 [Aa]ssets/Plugins/Editor/JetBrains/*
 
 # End of https://www.gitignore.io/api/unity,rider,jetbrains,visualstudio,visualstudiocode
