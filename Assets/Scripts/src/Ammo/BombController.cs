@@ -38,24 +38,24 @@ namespace src.Ammo
         {
             for (int i = 1; i < _bombsUtil.Power; i++)
             {
-                RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, i,
+                RaycastHit2D hit = Physics2D.Raycast(new Vector3(transform.position.x + 0.5f, transform.position.y + 0.5f, 0) , direction, i,
                     1 << 8);
+
                 if (!hit.collider)
                 {
-                    Instantiate(explosionPrefab, transform.position + i * direction, 
+                    Instantiate(explosionPrefab, transform.position + i * direction,
                         explosionPrefab.transform.rotation);
                 }
                 else
                 {
                     var key = hit.collider.GetComponent<IExplosable>();
-                    if(key != null)
+                    if (key != null)
                     {
                         key.onExplosion();
-                    }                  
+                    }
                     break;
                 }
             }
-
             yield return new WaitForSeconds(0.05f);
         }
 
