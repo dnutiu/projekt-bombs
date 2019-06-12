@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using src.Base;
 using src.Helpers;
 using src.Wall;
@@ -73,13 +72,13 @@ namespace src.Managers
             {
                 if (_destructibleWalls.Count == 0)
                 {
-                    Debug.LogWarning("No destructible walls left, cannot spawn upgrade.");
+                    DebugHelper.LogWarning("No destructible walls left, cannot spawn upgrade.");
                     continue;
                 }
 
                 /* Get the destructible wall script and make it to spawn the upgrade */
                 var wall = _destructibleWalls.PopRandom().GetComponent<DestructibleWall>();
-                Debug.Log($"Spawned upgrade at: x:{wall.XCoordinate} y:{wall.YCoordinate}");
+                DebugHelper.LogInfo($"Spawned upgrade at: x:{wall.XCoordinate} y:{wall.YCoordinate}");
                 wall.SpawnsUpgrade();
             }
         }
@@ -94,7 +93,7 @@ namespace src.Managers
 
             /* Get the destructible wall script and make it to spawn the exit */
             var wall = _destructibleWalls.PopRandom().GetComponent<DestructibleWall>();
-            Debug.Log($"Spawned exit at: x:{wall.XCoordinate} y:{wall.YCoordinate}");
+            DebugHelper.LogInfo($"Spawned exit at: x:{wall.XCoordinate} y:{wall.YCoordinate}");
             wall.SpawnsExit();
         }
 
@@ -159,7 +158,7 @@ namespace src.Managers
 
         private void PlaceDestructibleTile(Vector3 position)
         {
-            Debug.Log($"PlaceDestructibleTile: x:{position.x} y:{position.y}");
+            DebugHelper.LogInfo($"PlaceDestructibleTile: x:{position.x} y:{position.y}");
             var randomWall = destructibleWallPrefabs.ChoseRandom();
             var instance = Instantiate(randomWall, position, Quaternion.identity);
             _destructibleWalls.Add(instance);
@@ -168,7 +167,7 @@ namespace src.Managers
 
         private bool PlaceIndestructibleTile(float x, float y)
         {
-            Debug.Log($"PlaceIndestructibleTile: x:{x} y:{y}");
+            DebugHelper.LogInfo($"PlaceIndestructibleTile: x:{x} y:{y}");
             var absX = Mathf.RoundToInt(x);
             var absY = Mathf.RoundToInt(y);
 
