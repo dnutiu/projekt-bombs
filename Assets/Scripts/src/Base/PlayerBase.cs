@@ -1,4 +1,5 @@
 using System;
+using src.Helpers;
 using UnityEngine;
 
 namespace src.Base
@@ -25,7 +26,7 @@ namespace src.Base
 
         public void onExplosion()
         {
-            Debug.Log("Player hit by explosion");
+            DebugHelper.LogInfo("Player hit by explosion");
         }
     }
 }

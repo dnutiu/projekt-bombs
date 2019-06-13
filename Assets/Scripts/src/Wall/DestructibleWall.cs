@@ -1,6 +1,7 @@
 using UnityEngine;
 
 using src.Base;
+using src.Helpers;
 
 namespace src.Wall
 {
@@ -31,19 +32,19 @@ namespace src.Wall
             Instantiate(explosionPrefab, currentPosition, Quaternion.identity);
             if (_spawnExit)
             {
-                Debug.Log($"Destructible spawned exit {transform.position}");
+                DebugHelper.LogInfo($"Destructible spawned exit {transform.position}");
                 Instantiate(exitDoorPrefab, currentPosition, Quaternion.identity);
             }
             else if (_spawnUpgrade)
             {
-                Debug.Log($"Destructible spawned upgrade {transform.position}");
+                DebugHelper.LogInfo($"Destructible spawned upgrade {transform.position}");
                 // TODO: Get and instantiate upgrade from manager
             }
         }
 
         public void onExplosion()
         {
-            Debug.Log($"Destructible wall hit by explosion {transform.position}");
+            DebugHelper.LogInfo($"Destructible wall hit by explosion {transform.position}");
             BeforeDestroy();
             Destroy(gameObject);
         }
