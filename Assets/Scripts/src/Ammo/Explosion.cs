@@ -1,14 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using src.Base;
 using src.Managers;
-using UnityEngine;
 
-public class Explosion : MonoBehaviour
+namespace src.Ammo
 {
-    private readonly BombsUtilManager _bombUtil = BombsUtilManager.Instance;
-
-    public void Start()
+    public class Explosion : GameplayComponent
     {
-        Destroy(gameObject, _bombUtil.ExplosionDuration);
+        private readonly BombsUtilManager _bombUtil = BombsUtilManager.Instance;
+
+        public void Start()
+        {
+            Destroy(gameObject, _bombUtil.ExplosionDuration);
+        }
     }
 }

@@ -5,7 +5,7 @@ namespace src.Managers
 {
     public sealed class BombsUtilManager
     {
-        private HashSet<Vector3> _usedPosition = new HashSet<Vector3>();
+        private readonly HashSet<Vector3> _usedPosition = new HashSet<Vector3>();
 
         private const int MaxPower = 7;
         private const int MaxAllowedBombs = 10;
