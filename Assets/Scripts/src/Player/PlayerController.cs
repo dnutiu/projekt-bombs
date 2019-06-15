@@ -1,5 +1,6 @@
 ﻿using src.Ammo;
 using src.Base;
+using src.Helpers;
 using UnityEngine;
 
 namespace src.Player
@@ -8,12 +9,17 @@ namespace src.Player
     {
         private Transform _respawnPosition;
         private BombsSpawner _bombsSpawner;
+        private Animator _animator;
+        private static readonly int AnimHorizontal = Animator.StringToHash("AnimHorizontal");
+        private static readonly int AnimVertical = Animator.StringToHash("AnimVertical");
+
         protected new void Start()
         {
             base.Start();
 
             _respawnPosition = GameObject.Find("RespawnPosition").transform;
             _bombsSpawner = GameObject.Find("BombSpawner").GetComponent<BombsSpawner>();
+            _animator = GetComponentInChildren<Animator>();
             /* Always start at the starting point. */
             Respawn();
         }
@@ -33,6 +39,10 @@ namespace src.Player
 #if UNITY_EDITOR || UNITY_STANDALONE || UNITY_WEBGL
             var horizontal = Input.GetAxis("Horizontal");
             var vertical = Input.GetAxis("Vertical");
+            
+            _animator.SetFloat(AnimHorizontal, horizontal);
+            _animator.SetFloat(AnimVertical, vertical);
+            
             var movementVector = new Vector2(horizontal, vertical);
             rigidbody2d.MovePosition(rigidbody2d.position + movementSpeed * Time.deltaTime * movementVector);
 #elif UNITY_IOS || UNITY_ANDROID
