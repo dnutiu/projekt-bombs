@@ -1,10 +1,11 @@
 ﻿using System.Collections;
+using src.Base;
 using src.Managers;
 using UnityEngine;
 
 namespace src.Ammo
 {
-    public class BombController : MonoBehaviour, IExplosable
+    public class BombController : GameplayComponent, IExplosable
     {
         public GameObject explosionPrefab;
 
@@ -36,10 +37,11 @@ namespace src.Ammo
 
         private IEnumerator CreateExplosions(Vector3 direction)
         {
-            for (int i = 1; i < _bombsUtil.Power; i++)
+            var currentPosition = transform.position;
+            for (var i = 1; i < _bombsUtil.Power; i++)
             {
-                RaycastHit2D hit = Physics2D.Raycast(new Vector3(transform.position.x + 0.5f, transform.position.y + 0.5f, 0) , direction, i,
-                    1 << 8);
+                var hit = Physics2D.Raycast(new Vector2(currentPosition.x + 0.5f,
+                        currentPosition.y + 0.5f), direction, i, 1 << 8);
 
                 if (!hit.collider)
                 {
@@ -49,13 +51,12 @@ namespace src.Ammo
                 else
                 {
                     var key = hit.collider.GetComponent<IExplosable>();
-                    if (key != null)
-                    {
-                        key.onExplosion();
-                    }
+                    key?.onExplosion();
+
                     break;
                 }
             }
+
             yield return new WaitForSeconds(0.05f);
         }
 

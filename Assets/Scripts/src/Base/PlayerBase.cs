@@ -9,11 +9,11 @@ namespace src.Base
         public float movementSpeed = 4f;
         
         /* Movement */
-        protected Rigidbody2D Rigidbody2d;
+        protected Rigidbody2D rigidbody2d;
 
         protected void Start()
         {
-            Rigidbody2d = GetComponent<Rigidbody2D>();
+            rigidbody2d = GetComponent<Rigidbody2D>();
         }
 
         public void OnTriggerEnter2D(Collider2D other)

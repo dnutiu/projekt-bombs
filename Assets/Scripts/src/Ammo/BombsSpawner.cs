@@ -1,23 +1,25 @@
-﻿using src.Managers;
-using System.Collections;
-using System.Collections.Generic;
+﻿using src.Base;
+using src.Managers;
 using UnityEngine;
 
-public class BombsSpawner : MonoBehaviour
+namespace src.Ammo
 {
-    public GameObject bombPrefab;
-
-    private BombsUtilManager _bombsUtil = BombsUtilManager.Instance;
-
-    public void PlaceBomb(Transform transform)
+    public class BombsSpawner : GameplayComponent
     {
-        var absX = Mathf.RoundToInt(transform.position.x);
-        var absY = Mathf.RoundToInt(transform.position.y);
-        Vector3 position = new Vector3(absX, absY, 0);
-        if (_bombsUtil.CanPlaceBomb(position))
+        public GameObject bombPrefab;
+
+        private readonly BombsUtilManager _bombsUtil = BombsUtilManager.Instance;
+
+        public void PlaceBomb(Transform transform)
         {
-            Instantiate(bombPrefab, position, Quaternion.identity);
-            _bombsUtil.PlaceBomb(position);
+            var absX = Mathf.RoundToInt(transform.position.x);
+            var absY = Mathf.RoundToInt(transform.position.y);
+            var position = new Vector2(absX, absY);
+            if (_bombsUtil.CanPlaceBomb(position))
+            {
+                Instantiate(bombPrefab, position, Quaternion.identity);
+                _bombsUtil.PlaceBomb(position);
+            }
         }
     }
 }

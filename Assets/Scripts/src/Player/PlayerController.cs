@@ -1,18 +1,25 @@
-﻿using System;
+﻿using src.Ammo;
 using src.Base;
+using src.Helpers;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
 namespace src.Player
 {
     public class PlayerController : PlayerBase
     {
-        public Transform respawnPosition;
+        private Transform _respawnPosition;
+        private BombsSpawner _bombsSpawner;
+        private Animator _animator;
+        private static readonly int AnimHorizontal = Animator.StringToHash("AnimHorizontal");
+        private static readonly int AnimVertical = Animator.StringToHash("AnimVertical");
 
         protected new void Start()
         {
             base.Start();
 
+            _respawnPosition = GameObject.Find("RespawnPosition").transform;
+            _bombsSpawner = GameObject.Find("BombSpawner").GetComponent<BombsSpawner>();
+            _animator = GetComponentInChildren<Animator>();
             /* Always start at the starting point. */
             Respawn();
         }
@@ -32,20 +39,12 @@ namespace src.Player
 #if UNITY_EDITOR || UNITY_STANDALONE || UNITY_WEBGL
             var horizontal = Input.GetAxis("Horizontal");
             var vertical = Input.GetAxis("Vertical");
-
-            // Restrict movement in only one axis at the same time.
-            if (Math.Abs(vertical) > 0.00001)
-            {
-                horizontal = 0;
-            }
-            else
-            {
-                vertical = 0;
-            }
-
+            
+            _animator.SetFloat(AnimHorizontal, horizontal);
+            _animator.SetFloat(AnimVertical, vertical);
+            
             var movementVector = new Vector2(horizontal, vertical);
-
-            Rigidbody2d.position += movementSpeed * Time.deltaTime * movementVector;
+            rigidbody2d.MovePosition(rigidbody2d.position + movementSpeed * Time.deltaTime * movementVector);
 #elif UNITY_IOS || UNITY_ANDROID
     // Phone movement is not supported yet.
 #elif UNITY_PS4 || UNITY_XBOXONE
@@ -55,8 +54,7 @@ namespace src.Player
 
         private void PlaceBomb()
         {
-            GameObject bombsSpawnerObject = GameObject.Find("BombSpawner");
-            bombsSpawnerObject.GetComponent<BombsSpawner>().PlaceBomb(transform);
+            _bombsSpawner.PlaceBomb(transform);
         }
 
         private void HandleBomb()
@@ -75,7 +73,7 @@ namespace src.Player
 
         private void Respawn()
         {
-            transform.position = respawnPosition.position;
+            transform.SetPositionAndRotation(_respawnPosition.position, Quaternion.identity);
         }
 
         public void OnTriggerExit2D(Collider2D other)

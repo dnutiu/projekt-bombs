@@ -4,7 +4,7 @@ namespace src.Managers
 {
     public class GameManager : MonoBehaviour
     {
-        public static GameManager Instance = null;
+        public static GameManager Instance;
         private LevelManager _levelManager;
 
         public void Awake()
