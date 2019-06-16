@@ -37,13 +37,14 @@ namespace src.Player
         private void HandleMovement()
         {
 #if UNITY_EDITOR || UNITY_STANDALONE || UNITY_WEBGL
-            var horizontal = Input.GetAxis("Horizontal");
-            var vertical = Input.GetAxis("Vertical");
+            var horizontal = Input.GetAxisRaw("Horizontal");
+            var vertical = Input.GetAxisRaw("Vertical");
+            var movementVector = new Vector2(horizontal, vertical).NormalizeToCross();
             
-            _animator.SetFloat(AnimHorizontal, horizontal);
-            _animator.SetFloat(AnimVertical, vertical);
+            _animator.SetFloat(AnimHorizontal, movementVector.x);
+            _animator.SetFloat(AnimVertical, movementVector.y);
             
-            var movementVector = new Vector2(horizontal, vertical);
+            
             rigidbody2d.MovePosition(rigidbody2d.position + movementSpeed * Time.deltaTime * movementVector);
 #elif UNITY_IOS || UNITY_ANDROID
     // Phone movement is not supported yet.
