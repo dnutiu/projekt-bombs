@@ -22,11 +22,20 @@ namespace src.Base
             {
                 onExplosion();
             }
+            if (other.CompareTag("Enemy"))
+            {
+                OnContactWithEnemy();
+            }
         }
 
         public void onExplosion()
         {
             DebugHelper.LogInfo("Player hit by explosion");
+        }
+
+        private void OnContactWithEnemy()
+        {
+            DebugHelper.LogInfo("Player hit by enemy");
         }
     }
 }
