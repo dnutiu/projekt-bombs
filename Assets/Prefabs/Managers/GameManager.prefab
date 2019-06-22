@@ -63,3 +63,6 @@ MonoBehaviour:
   destructibleWallPrefabs:
   - {fileID: 4177940729222266681, guid: da559e681f8d34d58bb5f3457045664a, type: 3}
   - {fileID: 8729402555587492036, guid: 7e54504f1e1de4334be2e6a115b838c2, type: 3}
+  enemiesPrefab:
+  - {fileID: 4346602752014574748, guid: e719de70e335f4e49ae40cc6731309d4, type: 3}
+  - {fileID: 7795087027144463245, guid: fe8fb4e4a7e127648b306469b723d81e, type: 3}

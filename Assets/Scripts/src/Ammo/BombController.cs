@@ -31,8 +31,7 @@ namespace src.Ammo
             StartCoroutine(CreateExplosions(Vector3.right));
 
             _exploded = true;
-            Destroy(gameObject, 0.3f);
-            _bombsUtil.RemoveBomb(transform.position);
+            Destroy(gameObject, 0.55f);
         }
 
         private IEnumerator CreateExplosions(Vector3 direction)
@@ -40,8 +39,9 @@ namespace src.Ammo
             var currentPosition = transform.position;
             for (var i = 1; i < _bombsUtil.Power; i++)
             {
+                var distance = i == _bombsUtil.Power ? i : i - 0.5f;
                 var hit = Physics2D.Raycast(new Vector2(currentPosition.x + 0.5f,
-                        currentPosition.y + 0.5f), direction, i, 1 << 8);
+                        currentPosition.y + 0.5f), direction, distance, 1 << 8);
 
                 if (!hit.collider)
                 {
@@ -72,6 +72,11 @@ namespace src.Ammo
         {
             CancelInvoke(nameof(Explode));
             Explode();
+        }
+
+        public void OnDestroy()
+        {
+            _bombsUtil.RemoveBomb(transform.position);
         }
     }
 }

@@ -51,6 +51,7 @@ namespace src.Managers
         public Transform startPosition;
         public GameObject indestructibleWallPrefab;
         public GameObject[] destructibleWallPrefabs;
+        public GameObject[] enemiesPrefab;
 
         /* Specifies how many objects we want per level. */
         private Count _destructibleWallCount = new Count(150, 350);
@@ -64,6 +65,7 @@ namespace src.Managers
         /* Holds the available positions */
         private readonly List<Vector3> _freeGridPositions = new List<Vector3>();
         private readonly List<GameObject> _destructibleWalls = new List<GameObject>();
+        private readonly List<GameObject> _enemies = new List<GameObject>();
 
         private void SetupUpgrades()
         {
@@ -142,7 +144,7 @@ namespace src.Managers
         private void SetupLevelDestructibleWalls()
         {
             var numberOfDestructilbeWallsToPlace = _destructibleWallCount.RandomIntRange();
-
+            List<Vector3> usedPositions = new List<Vector3>();
             _freeGridPositions.ShuffleList();
             foreach (var nextPosition in _freeGridPositions)
             {
@@ -150,9 +152,13 @@ namespace src.Managers
                 {
                     break;
                 }
-
+                usedPositions.Add(nextPosition);
                 PlaceDestructibleTile(nextPosition);
                 numberOfDestructilbeWallsToPlace -= 1;
+            }
+            foreach (var usedPosition in usedPositions)
+            {
+                _freeGridPositions.Remove(usedPosition);
             }
         }
 
@@ -171,10 +177,40 @@ namespace src.Managers
             var absX = Mathf.RoundToInt(x);
             var absY = Mathf.RoundToInt(y);
 
-            if (absX % 2 == 0 || absY % 2 == 0) return false;
+            if (absX % 2 == 0 || absY % 2 == 0)
+            {
+                return false;
+            }
 
             var instance =
                 Instantiate(indestructibleWallPrefab, new Vector3(x, y, 0f), Quaternion.identity);
+            instance.transform.SetParent(boardHolder);
+            return true;
+        }
+
+        private void SetupLevelEnemies()
+        {
+            var numberOfEnemiesToPlace = _enemyCount.RandomIntRange();
+
+            _freeGridPositions.ShuffleList();
+            foreach (var nextPosition in _freeGridPositions)
+            {
+                if (numberOfEnemiesToPlace == 0)
+                {
+                    break;
+                }
+
+                PlaceEnemy(nextPosition);
+                numberOfEnemiesToPlace -= 1;
+            }
+        }
+
+        private bool PlaceEnemy(Vector3 position)
+        {
+            DebugHelper.LogInfo($"PlaceEnemy: x:{position.x} y:{position.y}");
+            var randomEnemy = enemiesPrefab.ChoseRandom();
+            var instance = Instantiate(randomEnemy, position, Quaternion.identity);
+            _enemies.Add(instance);
             instance.transform.SetParent(boardHolder);
             return true;
         }
@@ -184,6 +220,7 @@ namespace src.Managers
         {
             InitBoard();
             SetupLevelDestructibleWalls();
+            SetupLevelEnemies();
             SetupExit();
             SetupUpgrades();
         }
