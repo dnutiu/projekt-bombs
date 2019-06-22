@@ -6,6 +6,7 @@ namespace src.Managers
     {
         public static GameManager Instance;
         private LevelManager _levelManager;
+        private UpgradeManager _upgradeManager;
 
         public void Awake()
         {
@@ -22,8 +23,14 @@ namespace src.Managers
             DontDestroyOnLoad(gameObject);
 
             _levelManager = GetComponent<LevelManager>();
+            _upgradeManager = GetComponent<UpgradeManager>();
 
             InitGame();
+        }
+
+        public UpgradeManager GetUpgradeManager()
+        {
+            return _upgradeManager;
         }
 
         private void InitGame()

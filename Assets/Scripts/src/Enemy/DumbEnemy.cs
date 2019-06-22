@@ -11,7 +11,8 @@ public class DumbEnemy : EnemyBase
 
     protected new void FixedUpdate()
     {     
-        if (transform.position.x == Mathf.Floor(transform.position.x) && transform.position.y == Mathf.Floor(transform.position.y))
+        if (transform.position.x == Mathf.Floor(transform.position.x) && 
+            transform.position.y == Mathf.Floor(transform.position.y))
         {
             if (RandomChange())
             {
@@ -19,27 +20,26 @@ public class DumbEnemy : EnemyBase
             }
             else
             {
-                Rigidbody2d.MovePosition(Rigidbody2d.position + Direction * Speed * Time.deltaTime);
+                Rigidbody2d.MovePosition(Rigidbody2d.position + Speed * Time.deltaTime * Direction);
             }
         }
         else
         {
-            Rigidbody2d.MovePosition(Rigidbody2d.position + Direction * Speed * Time.deltaTime);
+            Rigidbody2d.MovePosition(Rigidbody2d.position + Speed * Time.deltaTime * Direction);
         }
     }
 
     private bool RandomChange()
     {
-        System.Random random = new System.Random();
-        int randomNumber = random.Next(0, 100);
+        var random = new System.Random();
+        var randomNumber = random.Next(0, 100);
         return randomNumber <= 25;
     }
 
     private void HandleChangeDirection()
     {
-        DebugHelper.LogInfo("Direction randomly changed");
         Direction = ChooseRandomExceptCertainDirection(Direction);
         MoveToCenterOfTheCell();
-        Rigidbody2d.MovePosition(Rigidbody2d.position + Direction * Speed * Time.deltaTime);
+        Rigidbody2d.MovePosition(Rigidbody2d.position + Speed * Time.deltaTime * Direction);
     }
 }

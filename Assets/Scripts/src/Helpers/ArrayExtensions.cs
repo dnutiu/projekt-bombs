@@ -8,7 +8,7 @@ namespace src.Helpers
     {
         public static T ChoseRandom<T>(this T[] arr)
         {
-            var randomIndex = Mathf.FloorToInt(Random.Range(0, arr.Length));
+            var randomIndex = Random.Range(0, arr.Length);
             return arr[randomIndex];
         }
 
@@ -17,7 +17,7 @@ namespace src.Helpers
             T value;
             do
             {
-                var randomIndex = Mathf.FloorToInt(Random.Range(0, arr.Length));
+                var randomIndex = Random.Range(0, arr.Length);
                 value = arr[randomIndex];
 
             } while (exceptValue.Equals(value));
@@ -29,7 +29,7 @@ namespace src.Helpers
             T value;
             do
             {
-                var randomIndex = Mathf.FloorToInt(Random.Range(0, arr.Length));
+                var randomIndex = Random.Range(0, arr.Length);
                 value = arr[randomIndex];
 
             } while (exceptValue.Contains(value));

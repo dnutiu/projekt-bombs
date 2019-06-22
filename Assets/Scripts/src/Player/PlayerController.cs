@@ -1,6 +1,7 @@
 ﻿using src.Ammo;
 using src.Base;
 using src.Helpers;
+using src.Interfaces;
 using UnityEngine;
 
 namespace src.Player

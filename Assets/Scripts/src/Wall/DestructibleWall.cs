@@ -1,7 +1,9 @@
+using System;
 using UnityEngine;
 
 using src.Base;
 using src.Helpers;
+using src.Managers;
 
 namespace src.Wall
 {
@@ -9,8 +11,14 @@ namespace src.Wall
     {
         private bool _spawnExit;
         private bool _spawnUpgrade;
+        private UpgradeManager _upgradeManager;
         public GameObject explosionPrefab;
         public GameObject exitDoorPrefab;
+
+        private void Start()
+        {
+            _upgradeManager = GameManager.Instance.GetUpgradeManager();
+        }
 
         public void SpawnsExit()
         {
@@ -38,7 +46,8 @@ namespace src.Wall
             else if (_spawnUpgrade)
             {
                 DebugHelper.LogInfo($"Destructible spawned upgrade {transform.position}");
-                // TODO: Get and instantiate upgrade from manager
+                var upgrade = _upgradeManager.GetUpgradePrefab();
+                Instantiate(upgrade, currentPosition, Quaternion.identity);
             }
         }
 
