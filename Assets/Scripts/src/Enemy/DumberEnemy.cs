@@ -8,9 +8,9 @@
         base.Start();
     }
 
-    protected new void Update()
+    protected new void FixedUpdate()
     {
-        base.Update();
+        base.FixedUpdate();
     }
 
 }

@@ -18,7 +18,7 @@ public abstract class EnemyBase : MonoBehaviour, IExplosable
     }
 
     // Update is called once per frame
-    protected void Update()
+    protected void FixedUpdate()
     {
         Rigidbody2d.MovePosition(Rigidbody2d.position + Direction * Speed * Time.deltaTime);
     }

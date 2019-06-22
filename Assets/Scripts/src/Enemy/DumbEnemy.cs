@@ -9,7 +9,7 @@ public class DumbEnemy : EnemyBase
         base.Start();
     }
 
-    protected new void Update()
+    protected new void FixedUpdate()
     {     
         if (transform.position.x == Mathf.Floor(transform.position.x) && transform.position.y == Mathf.Floor(transform.position.y))
         {

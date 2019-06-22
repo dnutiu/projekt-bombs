@@ -1,13 +1,12 @@
-using System;
-using System.Collections.Generic;
+using System.Collections;
 using src.Base;
-using src.Helpers;
 using UnityEngine;
 
 namespace src.Wall
 {
     public class WallTransparency : GameplayComponent
     {
+        public float secondsToWait = 0.1f; 
         private SpriteRenderer _spriteRenderer;
         private Color _originalSpriteColor;
         private bool _isTransparent;
@@ -16,21 +15,27 @@ namespace src.Wall
         {
             _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
             _originalSpriteColor = _spriteRenderer.color;
+            StartCoroutine(CheckIfSomethingNear());
         }
 
-        private void Update()
+        private IEnumerator CheckIfSomethingNear()
         {
-            var position = transform.position;
-            /* RayCast from the center of the tile up one distance and set layerMask to Player only! */
-            var hit = Physics2D.Raycast(new Vector2(position.x + .5f, position.y + 0.5f),
-                Vector2.up, 1f, 1 << 15);
-            if (hit.collider)
+            while (true)
             {
-                BecomeTransparent();
-            }
-            else
-            {
-                BecomeOpaque();
+                    var position = transform.position;
+                    /* RayCast from the center of the tile up one distance and set layerMask to Player only! */
+                    var hit = Physics2D.Raycast(new Vector2(position.x + .5f, position.y + 0.5f),
+                        Vector2.up, 1f, 1 << 15);
+                    if (hit.collider)
+                    {
+                        BecomeTransparent();
+                    }
+                    else
+                    {
+                        BecomeOpaque();
+                    }
+
+                    yield return new WaitForSeconds(secondsToWait);
             }
         }
 
