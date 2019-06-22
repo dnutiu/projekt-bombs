@@ -18,7 +18,7 @@ namespace src.Wall
         {
             _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
             _originalSpriteColor = _spriteRenderer.color;
-            StartCoroutine(nameof(CheckIfSomethingNear));
+            StartCoroutine(CheckIfSomethingNear());
         }
 
         private IEnumerator CheckIfSomethingNear()
