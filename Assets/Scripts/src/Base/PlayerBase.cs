@@ -37,5 +37,10 @@ namespace src.Base
         {
             DebugHelper.LogInfo("Player hit by enemy");
         }
+
+        public void IncreaseSpeed(float speed)
+        {
+            movementSpeed += speed;
+        }
     }
 }

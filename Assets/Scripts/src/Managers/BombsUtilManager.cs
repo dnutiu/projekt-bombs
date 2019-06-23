@@ -36,7 +36,7 @@ namespace src.Managers
 
         public void IncreaseAllowedBombs()
         {
-            if(AllowedBombs <= MaxAllowedBombs)
+            if (AllowedBombs <= MaxAllowedBombs)
             {
                 AllowedBombs++;
             }
@@ -44,7 +44,7 @@ namespace src.Managers
 
         public void PlaceBomb(Vector3 position)
         {
-            if(CanPlaceBomb(position))
+            if (CanPlaceBomb(position))
             {
                 PlacedBombs++;
                 _usedPosition.Add(position);
@@ -53,7 +53,7 @@ namespace src.Managers
 
         public void RemoveBomb(Vector3 position)
         {
-            if(_usedPosition.Contains(position))
+            if (_usedPosition.Contains(position))
             {
                 PlacedBombs--;
                 _usedPosition.Remove(position);
