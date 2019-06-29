@@ -11,6 +11,7 @@ namespace src.Player
         private Transform _respawnPosition;
         private BombsSpawner _bombsSpawner;
         private Animator _animator;
+        private PlayerUpgrade _playerUpgrade;
         private static readonly int AnimHorizontal = Animator.StringToHash("AnimHorizontal");
         private static readonly int AnimVertical = Animator.StringToHash("AnimVertical");
 
@@ -21,6 +22,12 @@ namespace src.Player
             _respawnPosition = GameObject.Find("RespawnPosition").transform;
             _bombsSpawner = GameObject.Find("BombSpawner").GetComponent<BombsSpawner>();
             _animator = GetComponentInChildren<Animator>();
+            _playerUpgrade = PlayerUpgrade.Instance;
+
+            movementSpeed = _playerUpgrade.GetMovementSpeed();
+            _playerUpgrade.PlayerSpeed += IncreaseSpeed;
+
+
             /* Always start at the starting point. */
             Respawn();
         }

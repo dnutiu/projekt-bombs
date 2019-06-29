@@ -1,5 +1,4 @@
 using src.Player;
-using UnityEngine;
 
 namespace src.Upgrade
 {
@@ -7,8 +6,7 @@ namespace src.Upgrade
     {
         public override void PerformUpgrade()
         {
-            /* TODO: Refactor to use a player manager. */
-            var player = GameObject.Find("Player").GetComponent<PlayerController>();
+            var player = PlayerUpgrade.Instance;
             player.IncreaseSpeed(.5f);
         }
     }
