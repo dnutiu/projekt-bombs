@@ -7,7 +7,7 @@ namespace src.Upgrade
 {
     public class TestUpgrade : UpgradeBase
     {
-        public void PerformUpgrade()
+        public new void PerformUpgrade()
         {
             DebugHelper.LogWarning("Test upgrade works!");
         }

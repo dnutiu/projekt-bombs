@@ -38,12 +38,28 @@ namespace src.Player
 
         private void HandleMovement()
         {
-#if UNITY_EDITOR || UNITY_STANDALONE || UNITY_WEBGL
+#if UNITY_STANDALONE || UNITY_WEBGL || UNITY_EDITOR
             var horizontal = Input.GetAxisRaw("Horizontal");
             var vertical = Input.GetAxisRaw("Vertical");
 #elif UNITY_IOS || UNITY_ANDROID
-            var horizontal = CrossPlatformInputManager.GetAxisRaw("Horizontal");
-            var vertical = CrossPlatformInputManager.GetAxisRaw("Vertical");
+            var horizontal = 0;
+            var vertical = 0;
+            if (CrossPlatformInputManager.GetButton("MoveUp"))
+            {
+                vertical = 1;
+            }
+            if (CrossPlatformInputManager.GetButton("MoveDown"))
+            {
+                vertical = -1;
+            }
+            if (CrossPlatformInputManager.GetButton("MoveRight"))
+            {
+                horizontal = 1;
+            }
+            if (CrossPlatformInputManager.GetButton("MoveLeft"))
+            {
+                horizontal = -1;
+            }
 #elif UNITY_PS4 || UNITY_XBOXONE
 //    // Console movement is not supported yet.
 #endif
