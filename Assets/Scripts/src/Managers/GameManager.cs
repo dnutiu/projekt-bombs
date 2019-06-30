@@ -44,5 +44,12 @@ namespace src.Managers
         {
             _levelManager.InitLevel();
         }
+
+        /* Listen for meta keys */
+        private void Update(){
+            if (Input.GetKeyDown(KeyCode.Escape)) 
+                Application.Quit(); 
+        }
+
     }
 }
