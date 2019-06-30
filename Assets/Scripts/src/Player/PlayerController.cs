@@ -3,6 +3,7 @@ using src.Base;
 using src.Helpers;
 using src.Interfaces;
 using UnityEngine;
+using UnityStandardAssets.CrossPlatformInput;
 
 namespace src.Player
 {
@@ -44,21 +45,39 @@ namespace src.Player
 
         private void HandleMovement()
         {
-#if UNITY_EDITOR || UNITY_STANDALONE || UNITY_WEBGL
+#if UNITY_STANDALONE || UNITY_WEBGL || UNITY_EDITOR
             var horizontal = Input.GetAxisRaw("Horizontal");
             var vertical = Input.GetAxisRaw("Vertical");
+#elif UNITY_IOS || UNITY_ANDROID
+            var horizontal = 0;
+            var vertical = 0;
+            if (CrossPlatformInputManager.GetButton("MoveUp"))
+            {
+                vertical = 1;
+            }
+            if (CrossPlatformInputManager.GetButton("MoveDown"))
+            {
+                vertical = -1;
+            }
+            if (CrossPlatformInputManager.GetButton("MoveRight"))
+            {
+                horizontal = 1;
+            }
+            if (CrossPlatformInputManager.GetButton("MoveLeft"))
+            {
+                horizontal = -1;
+            }
+#elif UNITY_PS4 || UNITY_XBOXONE
+//    // Console movement is not supported yet.
+#endif
+
             var movementVector = new Vector2(horizontal, vertical).NormalizeToCross();
-            
+
             _animator.SetFloat(AnimHorizontal, movementVector.x);
             _animator.SetFloat(AnimVertical, movementVector.y);
-            
-            
+
+
             rigidbody2d.MovePosition(rigidbody2d.position + movementSpeed * Time.deltaTime * movementVector);
-#elif UNITY_IOS || UNITY_ANDROID
-    // Phone movement is not supported yet.
-#elif UNITY_PS4 || UNITY_XBOXONE
-    // Console movement is not supported yet.
-#endif
         }
 
         private void PlaceBomb()
@@ -74,7 +93,10 @@ namespace src.Player
                 PlaceBomb();
             }
 #elif UNITY_IOS || UNITY_ANDROID
-            // Phone bomb placement is not supported yet.
+            if (CrossPlatformInputManager.GetButton("PlaceBomb"))
+            {
+                PlaceBomb();
+            }
 #elif UNITY_PS4 || UNITY_XBOXONE
             // Console bomb placement is not supported yet.
 #endif
@@ -89,7 +111,6 @@ namespace src.Player
         {
             if (other.CompareTag("Bomb"))
             {
-                
                 other.isTrigger = false;
             }
         }
