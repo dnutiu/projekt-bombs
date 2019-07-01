@@ -22,13 +22,14 @@ namespace src.Ammo
         {
             Instantiate(explosionPrefab, transform.position, Quaternion.identity);
 
-            GetComponent<SpriteRenderer>().enabled = false;
-            transform.Find("2DCollider").gameObject.SetActive(false);
+            GetComponentInChildren<SpriteRenderer>().enabled = false;
 
             StartCoroutine(CreateExplosions(Vector3.down));
             StartCoroutine(CreateExplosions(Vector3.left));
             StartCoroutine(CreateExplosions(Vector3.up));
             StartCoroutine(CreateExplosions(Vector3.right));
+
+            transform.Find("2DCollider").gameObject.SetActive(false);
 
             _exploded = true;
             Destroy(gameObject, 0.55f);
@@ -39,9 +40,8 @@ namespace src.Ammo
             var currentPosition = transform.position;
             for (var i = 1; i < _bombsUtil.Power; i++)
             {
-                var distance = i == _bombsUtil.Power ? i : i - 0.5f;
                 var hit = Physics2D.Raycast(new Vector2(currentPosition.x + 0.5f,
-                        currentPosition.y + 0.5f), direction, distance, 1 << 8);
+                        currentPosition.y + 0.5f), direction, i, 1 << 8);
 
                 if (!hit.collider)
                 {
@@ -50,9 +50,9 @@ namespace src.Ammo
                 }
                 else
                 {
+                    Debug.Log("Hit something");
                     var key = hit.collider.GetComponent<IExplosable>();
                     key?.onExplosion();
-
                     break;
                 }
             }
