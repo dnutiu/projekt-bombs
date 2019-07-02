@@ -14,10 +14,13 @@ namespace src.Wall
         private UpgradeManager _upgradeManager;
         public GameObject explosionPrefab;
         public GameObject exitDoorPrefab;
+        private Animator _animator;
 
         private void Start()
         {
             _upgradeManager = GameManager.Instance.GetUpgradeManager();
+            _animator = GetComponentInChildren<Animator>();
+           // _animator.speed = 0;
         }
 
         public void SpawnsExit()
@@ -49,13 +52,19 @@ namespace src.Wall
                 var upgrade = _upgradeManager.GetUpgradePrefab();
                 Instantiate(upgrade, currentPosition, Quaternion.identity);
             }
+            SwapToPulverise();
+        }
+
+        private void SwapToPulverise()
+        {
+           // _animator.speed = 10;
         }
 
         public void onExplosion()
         {
             DebugHelper.LogInfo($"Destructible wall hit by explosion {transform.position}");
             BeforeDestroy();
-            Destroy(gameObject);
+            Destroy(gameObject, .55f);
         }
     }
 }
