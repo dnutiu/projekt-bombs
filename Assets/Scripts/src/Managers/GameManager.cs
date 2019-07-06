@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using src.Helpers;
+using UnityEngine;
 
 namespace src.Managers
 {
@@ -45,11 +46,22 @@ namespace src.Managers
             _levelManager.InitLevel();
         }
 
-        /* Listen for meta keys */
-        private void Update(){
-            if (Input.GetKeyDown(KeyCode.Escape)) 
-                Application.Quit(); 
+        private void Update()
+        {
+            ListenForMetaKeys();
         }
 
+        private static void ListenForMetaKeys()
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                Application.Quit();
+                ApplicationActions.QuitGame();
+            }
+            else if (Input.GetKeyDown(KeyCode.P))
+            {
+                ApplicationActions.HandlePauseKey();
+            }
+        }
     }
 }
