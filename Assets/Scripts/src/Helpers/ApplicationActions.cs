@@ -1,11 +1,12 @@
+using src.Managers;
 using UnityEngine;
 
 namespace src.Helpers
 {
     public static class ApplicationActions
     {
-        public static bool IsGamePaused { get; private set; }
-
+        private static GameStateManager _gameStateManager = GameStateManager.Instance;
+        
         public static void QuitGame()
         {
             Application.Quit();
@@ -13,19 +14,19 @@ namespace src.Helpers
 
         public static void PauseGame()
         {
-            IsGamePaused = true;
+            _gameStateManager.IsGamePaused = true;
             Time.timeScale = 0f;
         }
 
         public static void UnpauseGame()
         {
-            IsGamePaused = false;
+            _gameStateManager.IsGamePaused = false;
             Time.timeScale = 1f; 
         }
 
         public static void HandlePauseKey()
         {
-            if (IsGamePaused)
+            if (_gameStateManager.IsGamePaused)
             {
                 UnpauseGame();
             }

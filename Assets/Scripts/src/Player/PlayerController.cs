@@ -2,6 +2,7 @@
 using src.Base;
 using src.Helpers;
 using src.Interfaces;
+using src.Managers;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 
@@ -9,6 +10,7 @@ namespace src.Player
 {
     public class PlayerController : PlayerBase
     {
+        private GameStateManager _gameStateManager = GameStateManager.Instance;
         private Transform _respawnPosition;
         private BombsSpawner _bombsSpawner;
         private Animator _animator;
@@ -35,13 +37,13 @@ namespace src.Player
 
         private void FixedUpdate()
         {
-            if (ApplicationActions.IsGamePaused) {return;}
+            if (_gameStateManager.IsGamePaused) {return;}
             HandleMovement();
         }
 
         private void Update()
         {
-            if (ApplicationActions.IsGamePaused) {return;}
+            if (_gameStateManager.IsGamePaused) {return;}
             HandleBomb();
         }
 
