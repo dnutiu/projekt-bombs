@@ -64,7 +64,7 @@ namespace src.Wall
         {
             DebugHelper.LogInfo($"Destructible wall hit by explosion {transform.position}");
             BeforeDestroy();
-            Destroy(gameObject, .55f);
+            Destroy(gameObject);
         }
     }
 }
