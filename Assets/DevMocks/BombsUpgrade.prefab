@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7980903176349258245}
   - component: {fileID: 6699440875015304414}
   - component: {fileID: 7875732231624854186}
-  - component: {fileID: 7738746775589240714}
+  - component: {fileID: 5909025813549437813}
   m_Layer: 0
   m_Name: BombsUpgrade
   m_TagString: Untagged
@@ -107,7 +107,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &7738746775589240714
+--- !u!114 &5909025813549437813
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

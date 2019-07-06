@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using src.Helpers;
+using UnityEngine;
 
 namespace src.Managers
 {
@@ -8,6 +10,7 @@ namespace src.Managers
         private LevelManager _levelManager;
         private UpgradeManager _upgradeManager;
         private BombsUtilManager _bombsUtilManager;
+        private GameObject _preStageUi;
 
         public void Awake()
         {
@@ -26,7 +29,12 @@ namespace src.Managers
             _levelManager = GetComponent<LevelManager>();
             _upgradeManager = GetComponent<UpgradeManager>();
             _bombsUtilManager = BombsUtilManager.Instance;
+            _preStageUi = GameObject.Find("PreStageUI");
+        }
 
+        public void Start()
+        {
+            StartCoroutine(PreInitGame());
             InitGame();
         }
 
@@ -44,12 +52,28 @@ namespace src.Managers
         {
             _levelManager.InitLevel();
         }
-
-        /* Listen for meta keys */
-        private void Update(){
-            if (Input.GetKeyDown(KeyCode.Escape)) 
-                Application.Quit(); 
+        private IEnumerator PreInitGame()
+        {
+            _preStageUi.SetActive(true);
+            yield return new WaitForSeconds(0.7f);
+            _preStageUi.SetActive(false);
         }
 
+        private void Update()
+        {
+            ListenForMetaKeys();
+        }
+
+        private static void ListenForMetaKeys()
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                ApplicationActions.QuitGame();
+            }
+            else if (Input.GetKeyDown(KeyCode.P))
+            {
+                ApplicationActions.HandlePauseKey();
+            }
+        }
     }
 }
