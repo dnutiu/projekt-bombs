@@ -79,3 +79,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e64481d2e18e4b6ca4f22926a5061450, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  upgradePrefabs:
+  - {fileID: 4242909486338491383, guid: c0bd5085d71f847b19df326a2fbcf069, type: 3}
+  - {fileID: 7385886653159515755, guid: ba0e1f9d79914426ba805d871bcad311, type: 3}
+  - {fileID: 2377911311221568072, guid: 6d6a8eb6810cd4483a761f7b02fff67f, type: 3}
