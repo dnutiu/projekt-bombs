@@ -55,7 +55,7 @@ namespace src.Managers
         private IEnumerator PreInitGame()
         {
             _preStageUi.SetActive(true);
-            yield return new WaitForSeconds(0.7f);
+            yield return new WaitForSeconds(1f);
             _preStageUi.SetActive(false);
         }
 
