@@ -29,6 +29,8 @@ namespace src.Player
 
             movementSpeed = _playerUpgrade.GetMovementSpeed();
             _playerUpgrade.PlayerSpeed += IncreaseSpeed;
+            
+            Respawn();
         }
 
         private void FixedUpdate()
