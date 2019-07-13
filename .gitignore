@@ -537,4 +537,7 @@ MigrationBackup/
 Assets/Plugins/Editor*
 [Aa]ssets/Plugins/Editor/JetBrains/*
 
+# Don't store keystores on Github
+*.keystore
+
 # End of https://www.gitignore.io/api/unity,rider,jetbrains,visualstudio,visualstudiocode
