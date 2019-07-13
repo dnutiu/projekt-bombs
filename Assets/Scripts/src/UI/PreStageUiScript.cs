@@ -1,10 +1,11 @@
+using src.Base;
 using src.Managers;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace src.UI
 {
-    public class PreLevelLoad : MonoBehaviour
+    public class PreStageUiScript : GameplayComponent
     {
         private readonly GameStateManager _gameStateManager = GameStateManager.Instance;
         private Text _stageText;

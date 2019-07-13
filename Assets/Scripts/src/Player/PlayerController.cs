@@ -29,10 +29,6 @@ namespace src.Player
 
             movementSpeed = _playerUpgrade.GetMovementSpeed();
             _playerUpgrade.PlayerSpeed += IncreaseSpeed;
-
-
-            /* Always start at the starting point. */
-            Respawn();
         }
 
         private void FixedUpdate()
@@ -106,9 +102,11 @@ namespace src.Player
 #endif
         }
 
-        private void Respawn()
+        public void Respawn()
         {
+            DebugHelper.LogInfo("Player is respawning!");
             transform.SetPositionAndRotation(_respawnPosition.position, Quaternion.identity);
+            _animator.Play("IdleDown");
         }
 
         public void OnTriggerExit2D(Collider2D other)

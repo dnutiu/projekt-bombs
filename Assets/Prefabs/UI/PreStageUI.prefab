@@ -78,7 +78,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Stage 1
+  m_Text: 
 --- !u!1 &2251350585563921972
 GameObject:
   m_ObjectHideFlags: 0
@@ -165,7 +165,7 @@ GameObject:
   - component: {fileID: 2152024136797500473}
   - component: {fileID: 936482196064115039}
   - component: {fileID: 826719949318333507}
-  - component: {fileID: 2684488013186753063}
+  - component: {fileID: 4764158450672019134}
   m_Layer: 5
   m_Name: PreStageUI
   m_TagString: Untagged
@@ -254,7 +254,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &2684488013186753063
+--- !u!114 &4764158450672019134
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

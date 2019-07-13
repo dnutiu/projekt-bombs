@@ -1,17 +1,18 @@
-using src.Base;
 using src.Interfaces;
 using src.Managers;
 using UnityEngine;
 
-namespace src.Upgrade
+namespace src.Base
 {
     public class UpgradeBase : GameplayComponent, IUpgrade
     {
-        protected GameManager gameManager;
+        protected GameManager GameManager;
+        private UpgradeManager _upgradeManager;
 
         public void Start()
         {
-            gameManager = GameManager.Instance;
+            GameManager = GameManager.Instance;
+            _upgradeManager = UpgradeManager.Instance;
         }
 
         public virtual void PerformUpgrade()
@@ -23,6 +24,7 @@ namespace src.Upgrade
         {
             if (!other.CompareTag("Player")) return;
             PerformUpgrade();
+            _upgradeManager.ClaimUpgrade(gameObject);
             Destroy(gameObject);
         }
     }
