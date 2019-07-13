@@ -23,7 +23,7 @@ namespace src.Wall
             {
                 return;
             }
-            Destroy(this);
+            Destroy(gameObject, 1f);
             _gameManager.StartNextLevel();
         }
     }
