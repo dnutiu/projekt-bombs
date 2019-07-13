@@ -164,8 +164,7 @@ namespace src.Managers
 
         private void PlaceDestructibleTile(Vector3 position)
         {
-            // TODO ADD ENUMS AND DEFINES TO THE LOGGING SYSTEM
-//            DebugHelper.LogInfo($"PlaceDestructibleTile: x:{position.x} y:{position.y}");
+            DebugHelper.LogVerbose($"PlaceDestructibleTile: x:{position.x} y:{position.y}");
             var randomWall = destructibleWallPrefabs.ChoseRandom();
             var instance = Instantiate(randomWall, position, Quaternion.identity);
             _destructibleWalls.Add(instance);
@@ -174,7 +173,7 @@ namespace src.Managers
 
         private bool PlaceIndestructibleTile(float x, float y)
         {
-//            DebugHelper.LogInfo($"PlaceIndestructibleTile: x:{x} y:{y}");
+            DebugHelper.LogVerbose($"PlaceIndestructibleTile: x:{x} y:{y}");
             var absX = Mathf.RoundToInt(x);
             var absY = Mathf.RoundToInt(y);
 
@@ -208,7 +207,7 @@ namespace src.Managers
 
         private bool PlaceEnemy(Vector3 position)
         {
-//            DebugHelper.LogInfo($"PlaceEnemy: x:{position.x} y:{position.y}");
+            DebugHelper.LogVerbose($"PlaceEnemy: x:{position.x} y:{position.y}");
             var randomEnemy = enemiesPrefab.ChoseRandom();
             var instance = Instantiate(randomEnemy, position, Quaternion.identity);
             _enemies.Add(instance);
