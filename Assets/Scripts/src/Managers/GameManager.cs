@@ -48,9 +48,9 @@ namespace src.Managers
 
         private void StartLevel()
         {
-            _playerController.Respawn();
             StartCoroutine(PreInitGame());
             _levelManager.InitLevel();
+            _playerController.Respawn();
         }
 
         public UpgradeManager GetUpgradeManager()
