@@ -68,6 +68,9 @@ namespace src.Managers
         private List<Vector3> _freeGridPositions;
         private List<GameObject> _destructibleWalls;
         private List<GameObject> _enemies;
+        
+        /* Singletons */
+        private GameStateManager _gameStateManager = GameStateManager.Instance;
 
         /* Modifies walls from _destructibleWalls in order to setup upgrades*/
         private void SetupSpawnables()
@@ -218,6 +221,7 @@ namespace src.Managers
         /* Initializes the level. */
         public void InitLevel()
         {
+            DebugHelper.LogInfo($"Initializing level: #{_gameStateManager.Level}");
             _freeGridPositions = new List<Vector3>(_freeGridPositionsBoard);
             _destructibleWalls = new List<GameObject>();
             _enemies = new List<GameObject>();

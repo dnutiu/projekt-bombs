@@ -90,7 +90,6 @@ namespace src.Managers
 
         public void StartNextLevel()
         {
-            DebugHelper.LogInfo("Initializing next level!");
             _levelManager.DestroyLevel();
             _upgradeManager.DestroyUnclaimedUpgrades();
             _gameStateManager.IncreaseLevel();
