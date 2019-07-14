@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using src.Base;
 using src.Helpers;
 using src.Wall;
@@ -63,47 +64,49 @@ namespace src.Managers
         private const int Rows = 20;
 
         /* Holds the available positions */
-        private readonly List<Vector3> _freeGridPositions = new List<Vector3>();
-        private readonly List<GameObject> _destructibleWalls = new List<GameObject>();
-        private readonly List<GameObject> _enemies = new List<GameObject>();
+        private readonly List<Vector3> _freeGridPositionsBoard = new List<Vector3>();
+        private List<Vector3> _freeGridPositions;
+        private List<GameObject> _destructibleWalls;
+        private List<GameObject> _enemies;
+        
+        /* Singletons */
+        private GameStateManager _gameStateManager = GameStateManager.Instance;
 
-        private void SetupUpgrades()
+        /* Modifies walls from _destructibleWalls in order to setup upgrades*/
+        private void SetupSpawnables()
         {
             var count = _upgradesCount.RandomIntRange();
+            var wallsSize = _destructibleWalls.Count;
+            _destructibleWalls.ShuffleList();
             for (var i = 0; i < count; i++)
             {
-                if (_destructibleWalls.Count == 0)
+                if (i > wallsSize - 1)
                 {
                     DebugHelper.LogWarning("No destructible walls left, cannot spawn upgrade.");
                     continue;
                 }
 
                 /* Get the destructible wall script and make it to spawn the upgrade */
-                var wall = _destructibleWalls.PopRandom().GetComponent<DestructibleWall>();
+                var wall = _destructibleWalls[i].GetComponent<DestructibleWall>();
                 DebugHelper.LogInfo($"Spawned upgrade at: x:{wall.XCoordinate} y:{wall.YCoordinate}");
                 wall.SpawnsUpgrade();
             }
-        }
-
-        private void SetupExit()
-        {
-            if (_destructibleWalls.Count == 0)
+            
+            if (count > wallsSize - 2)
             {
                 Debug.LogWarning("No destructible walls found, cannot spawn exit!");
                 return;
             }
-
-            /* Get the destructible wall script and make it to spawn the exit */
-            var wall = _destructibleWalls.PopRandom().GetComponent<DestructibleWall>();
-            DebugHelper.LogInfo($"Spawned exit at: x:{wall.XCoordinate} y:{wall.YCoordinate}");
-            wall.SpawnsExit();
+            
+            var exitWall = _destructibleWalls[count + 1].GetComponent<DestructibleWall>();
+            DebugHelper.LogInfo($"Spawned exit at: x:{exitWall.XCoordinate} y:{exitWall.YCoordinate}");
+            exitWall.SpawnsExit();
         }
 
         /* Place the indestructible tiles on the board and saves the
          * unused positions in a list. */
-        private void InitBoard()
+        public void InitBoard()
         {
-            _freeGridPositions.Clear();
             /* We want to iterate over the X axis taking into consideration the startPosition's offset */
             for (var x = startPosition.position.x; x < Columns; x++)
             {
@@ -135,7 +138,7 @@ namespace src.Managers
                     }
 
                     /* Add position to _gridPositions */
-                    _freeGridPositions.Add(new Vector3(x, y, 0f));
+                    _freeGridPositionsBoard.Add(new Vector3(x, y, 0f));
                 }
             }
         }
@@ -143,18 +146,18 @@ namespace src.Managers
         /* Randomly places destructible tiles on the level. */
         private void SetupLevelDestructibleWalls()
         {
-            var numberOfDestructilbeWallsToPlace = _destructibleWallCount.RandomIntRange();
+            var numberOfWallsRemaining = _destructibleWallCount.RandomIntRange();
             List<Vector3> usedPositions = new List<Vector3>();
             _freeGridPositions.ShuffleList();
             foreach (var nextPosition in _freeGridPositions)
             {
-                if (numberOfDestructilbeWallsToPlace == 0)
+                if (numberOfWallsRemaining == 0)
                 {
                     break;
                 }
                 usedPositions.Add(nextPosition);
                 PlaceDestructibleTile(nextPosition);
-                numberOfDestructilbeWallsToPlace -= 1;
+                numberOfWallsRemaining -= 1;
             }
             foreach (var usedPosition in usedPositions)
             {
@@ -164,7 +167,7 @@ namespace src.Managers
 
         private void PlaceDestructibleTile(Vector3 position)
         {
-            DebugHelper.LogInfo($"PlaceDestructibleTile: x:{position.x} y:{position.y}");
+            DebugHelper.LogVerbose($"PlaceDestructibleTile: x:{position.x} y:{position.y}");
             var randomWall = destructibleWallPrefabs.ChoseRandom();
             var instance = Instantiate(randomWall, position, Quaternion.identity);
             _destructibleWalls.Add(instance);
@@ -173,7 +176,7 @@ namespace src.Managers
 
         private bool PlaceIndestructibleTile(float x, float y)
         {
-            DebugHelper.LogInfo($"PlaceIndestructibleTile: x:{x} y:{y}");
+            DebugHelper.LogVerbose($"PlaceIndestructibleTile: x:{x} y:{y}");
             var absX = Mathf.RoundToInt(x);
             var absY = Mathf.RoundToInt(y);
 
@@ -207,7 +210,7 @@ namespace src.Managers
 
         private bool PlaceEnemy(Vector3 position)
         {
-            DebugHelper.LogInfo($"PlaceEnemy: x:{position.x} y:{position.y}");
+            DebugHelper.LogVerbose($"PlaceEnemy: x:{position.x} y:{position.y}");
             var randomEnemy = enemiesPrefab.ChoseRandom();
             var instance = Instantiate(randomEnemy, position, Quaternion.identity);
             _enemies.Add(instance);
@@ -218,11 +221,27 @@ namespace src.Managers
         /* Initializes the level. */
         public void InitLevel()
         {
-            InitBoard();
+            DebugHelper.LogInfo($"Initializing level: #{_gameStateManager.Level}");
+            _freeGridPositions = new List<Vector3>(_freeGridPositionsBoard);
+            _destructibleWalls = new List<GameObject>();
+            _enemies = new List<GameObject>();
             SetupLevelDestructibleWalls();
             SetupLevelEnemies();
-            SetupExit();
-            SetupUpgrades();
+            SetupSpawnables();
+        }
+
+        public void DestroyLevel()
+        {
+            foreach (var enemy in _enemies)
+            {
+                Destroy(enemy);
+            }
+
+            foreach (var wall in _destructibleWalls)
+            {
+                Destroy(wall);
+            }
+            DebugHelper.LogInfo("LevelManager: Cleared level!");
         }
     }
 }

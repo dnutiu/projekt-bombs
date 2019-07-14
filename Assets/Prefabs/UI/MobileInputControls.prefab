@@ -553,7 +553,7 @@ MonoBehaviour:
             m_FloatArgument: 1
             m_StringArgument: Jump
             m_BoolArgument: 0
-          m_CallState: 2
+          m_CallState: 1
       m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
         Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   delegates:

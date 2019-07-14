@@ -8,6 +8,16 @@ namespace src.Helpers
 {
     public static class DebugHelper
     {
+        public static void LogVerbose(string message)
+        {
+#if LOG_VERBOSE
+            if (Debug.isDebugBuild)
+            {
+                Debug.Log(message);
+            }  
+#endif
+        }
+        
         public static void LogInfo(string message)
         {
             if (Debug.isDebugBuild)

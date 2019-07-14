@@ -36,7 +36,7 @@ namespace src.Wall
         public float XCoordinate => transform.position.x;
         public float YCoordinate => transform.position.y;
 
-        private void BeforeDestroy()
+        private void SpawnSomething()
         {
             var currentPosition = transform.position;
             Destroy(GetComponent<SpriteRenderer>());
@@ -50,12 +50,12 @@ namespace src.Wall
             {
                 DebugHelper.LogInfo($"Destructible spawned upgrade {transform.position}");
                 var upgrade = _upgradeManager.GetUpgradePrefab();
-                Instantiate(upgrade, currentPosition, Quaternion.identity);
+                var instance = Instantiate(upgrade, currentPosition, Quaternion.identity);
+                _upgradeManager.RegisterUpgradeAsUnclaimed(instance);
             }
-            SwapToPulverise();
         }
 
-        private void SwapToPulverise()
+        private void PlayDestroyAnimation()
         {
            // _animator.speed = 10;
         }
@@ -63,7 +63,8 @@ namespace src.Wall
         public void onExplosion()
         {
             DebugHelper.LogInfo($"Destructible wall hit by explosion {transform.position}");
-            BeforeDestroy();
+            PlayDestroyAnimation();
+            SpawnSomething();
             Destroy(gameObject);
         }
     }
