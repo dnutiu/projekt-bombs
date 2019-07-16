@@ -4,6 +4,7 @@ namespace src.Managers
     {
         public static GameStateManager Instance { get; } = new GameStateManager();
         public bool IsGamePaused { get; internal set; }
+        public bool IsPlayerMovementForbidden { get; internal set; }
         public int Level { get; private set; } = 1;
 
 
@@ -11,5 +12,7 @@ namespace src.Managers
         {
             Level += 1;
         }
+        
+        
     }
 }

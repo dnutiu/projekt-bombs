@@ -35,13 +35,13 @@ namespace src.Player
 
         private void FixedUpdate()
         {
-            if (_gameStateManager.IsGamePaused) {return;}
+            if (_gameStateManager.IsGamePaused || _gameStateManager.IsPlayerMovementForbidden) {return;}
             HandleMovement();
         }
 
         private void Update()
         {
-            if (_gameStateManager.IsGamePaused) {return;}
+            if (_gameStateManager.IsGamePaused || _gameStateManager.IsPlayerMovementForbidden) {return;}
             HandleBomb();
         }
 

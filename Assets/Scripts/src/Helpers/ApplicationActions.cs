@@ -35,5 +35,15 @@ namespace src.Helpers
                 PauseGame();
             }
         }
+
+        public static void ForbidPlayerMovement()
+        {
+            _gameStateManager.IsPlayerMovementForbidden = true;
+        }
+
+        public static void AllowPlayerMovement()
+        {
+            _gameStateManager.IsPlayerMovementForbidden = false;
+        }
     }
 }

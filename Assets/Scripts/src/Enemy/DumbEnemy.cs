@@ -11,6 +11,7 @@ public class DumbEnemy : EnemyBase
 
     protected new void FixedUpdate()
     {     
+        if (gameStateManager.IsGamePaused || gameStateManager.IsPlayerMovementForbidden) {return;}
         if (transform.position.x == Mathf.Floor(transform.position.x) && 
             transform.position.y == Mathf.Floor(transform.position.y))
         {
