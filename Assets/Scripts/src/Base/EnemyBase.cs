@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
 using src.Helpers;
+using src.Managers;
 
 public abstract class EnemyBase : MonoBehaviour, IExplosable
 {
 
     protected Vector2[] _directions = { Vector3.up, Vector3.down, Vector3.left, Vector3.right };
- 
+    protected readonly GameStateManager gameStateManager = GameStateManager.Instance;
+
     protected Rigidbody2D Rigidbody2d { get; set; }
     protected float Speed { get; set; }
     protected Vector2 Direction { get; set; }
@@ -20,6 +22,7 @@ public abstract class EnemyBase : MonoBehaviour, IExplosable
     // Update is called once per frame
     protected void FixedUpdate()
     {
+        if (gameStateManager.IsGamePaused || gameStateManager.IsPlayerMovementForbidden) {return;}
         Rigidbody2d.MovePosition(Rigidbody2d.position + Direction * Speed * Time.deltaTime);
     }
 
