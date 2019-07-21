@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using src.Base;
+using src.Helpers;
 using src.Managers;
 using UnityEngine;
 
@@ -9,12 +10,14 @@ namespace src.Ammo
     {
         public GameObject explosionPrefab;
 
+        private BombCameraShake _cameraShake;
         private readonly BombsUtilManager _bombsUtil = BombsUtilManager.Instance;
         private bool _exploded;
 
         // Start is called before the first frame update
         void Start()
         {
+            _cameraShake = GameObject.Find("VCAM1").GetComponent<BombCameraShake>();
             Invoke(nameof(Explode), _bombsUtil.Timer);
         }
 
@@ -24,6 +27,7 @@ namespace src.Ammo
 
             GetComponentInChildren<SpriteRenderer>().enabled = false;
 
+            _cameraShake.StartCameraShakeCoro();
             StartCoroutine(CreateExplosions(Vector3.down));
             StartCoroutine(CreateExplosions(Vector3.left));
             StartCoroutine(CreateExplosions(Vector3.up));
