@@ -1,5 +1,8 @@
 ﻿using System.Collections;
+using src.Ammo;
 using src.Helpers;
+using src.Level;
+using src.Level.src.Level;
 using src.Player;
 using UnityEngine;
 
@@ -48,7 +51,11 @@ namespace src.Managers
 
         private void StartLevel()
         {
+            var levelData = LevelResource.GetLevelData(_gameStateManager.Level);
             StartCoroutine(PreInitGame());
+            _levelManager.SetLevelData(levelData);
+            _upgradeManager.SetLevelData(levelData);
+            
             _levelManager.InitLevel();
             _playerController.Respawn();
         }

@@ -63,12 +63,6 @@ MonoBehaviour:
   startPosition: {fileID: 0}
   indestructibleWallPrefab: {fileID: 5996206011854593075, guid: 84b92ac1e96d940bda97d1b1125887d7,
     type: 3}
-  destructibleWallPrefabs:
-  - {fileID: 4177940729222266681, guid: da559e681f8d34d58bb5f3457045664a, type: 3}
-  - {fileID: 8729402555587492036, guid: 7e54504f1e1de4334be2e6a115b838c2, type: 3}
-  enemiesPrefab:
-  - {fileID: 4346602752014574748, guid: e719de70e335f4e49ae40cc6731309d4, type: 3}
-  - {fileID: 7795087027144463245, guid: fe8fb4e4a7e127648b306469b723d81e, type: 3}
 --- !u!114 &6316647355651322741
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -81,7 +75,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e64481d2e18e4b6ca4f22926a5061450, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  upgradePrefabs:
-  - {fileID: 4242909486338491383, guid: c0bd5085d71f847b19df326a2fbcf069, type: 3}
-  - {fileID: 7385886653159515755, guid: ba0e1f9d79914426ba805d871bcad311, type: 3}
-  - {fileID: 2377911311221568072, guid: 6d6a8eb6810cd4483a761f7b02fff67f, type: 3}
