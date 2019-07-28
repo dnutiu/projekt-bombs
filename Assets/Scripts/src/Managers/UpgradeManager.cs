@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using src.Base;
 using src.Helpers;
+using src.Level.src.Level;
 using UnityEngine;
 
 namespace src.Managers
@@ -10,7 +11,7 @@ namespace src.Managers
     {
         public static UpgradeManager Instance;
         private List<GameObject> _unclaimedUpgrades = new List<GameObject>();
-        public GameObject[] upgradePrefabs;
+        private GameObject[] _upgradePrefabs;
 
         private void Awake()
         {
@@ -23,10 +24,15 @@ namespace src.Managers
                 Destroy(gameObject);
             }
         }
+        
+        public void SetLevelData(LevelData levelData)
+        {
+            _upgradePrefabs = levelData.upgradesPrefab;
+        }
 
         public GameObject GetUpgradePrefab()
         {
-            return upgradePrefabs.ChoseRandom();
+            return _upgradePrefabs.ChoseRandom();
         }
 
         /* Register unclaimed upgrades so then can be destroyed on level changed or other events. */

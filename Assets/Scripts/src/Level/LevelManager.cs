@@ -1,32 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using src.Base;
 using src.Helpers;
+using src.Level.src.Level;
+using src.Managers;
 using src.Wall;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace src.Managers
+namespace src.Level
 {
     public class LevelManager : GameplayComponent
     {
-        public class Count
-        {
-            private readonly int _min;
-            private readonly int _max;
-
-            public Count(int min, int max)
-            {
-                _min = min;
-                _max = max;
-            }
-
-            public int RandomIntRange()
-            {
-                return Mathf.FloorToInt(Random.Range(_min, _max));
-            }
-        }
-
         public Count DestructibleWallCount
         {
             get => _destructibleWallCount;
@@ -47,12 +31,12 @@ namespace src.Managers
 
         /* Used to group spawned objects */
         public Transform boardHolder;
-
         /* Holds the starting position of the player */
         public Transform startPosition;
+        /* Holds references to prefabs for the specified level. */
         public GameObject indestructibleWallPrefab;
-        public GameObject[] destructibleWallPrefabs;
-        public GameObject[] enemiesPrefab;
+        private GameObject[] _destructibleWallPrefabs;
+        private GameObject[] _enemiesPrefab;
 
         /* Specifies how many objects we want per level. */
         private Count _destructibleWallCount = new Count(150, 350);
@@ -72,6 +56,15 @@ namespace src.Managers
         /* Singletons */
         private GameStateManager _gameStateManager = GameStateManager.Instance;
 
+        public void SetLevelData(LevelData levelData)
+        {
+            _destructibleWallCount = levelData.destructibleWallCount;
+            _upgradesCount = levelData.upgradeCount;
+            _enemyCount = levelData.enemyCount;
+            _enemiesPrefab = levelData.enemiesPrefab;
+            _destructibleWallPrefabs = levelData.destructibleWallsPrefab;
+        }
+        
         /* Modifies walls from _destructibleWalls in order to setup upgrades*/
         private void SetupSpawnables()
         {
@@ -168,7 +161,7 @@ namespace src.Managers
         private void PlaceDestructibleTile(Vector3 position)
         {
             DebugHelper.LogVerbose($"PlaceDestructibleTile: x:{position.x} y:{position.y}");
-            var randomWall = destructibleWallPrefabs.ChoseRandom();
+            var randomWall = _destructibleWallPrefabs.ChoseRandom();
             var instance = Instantiate(randomWall, position, Quaternion.identity);
             _destructibleWalls.Add(instance);
             instance.transform.SetParent(boardHolder);
@@ -211,7 +204,7 @@ namespace src.Managers
         private bool PlaceEnemy(Vector3 position)
         {
             DebugHelper.LogVerbose($"PlaceEnemy: x:{position.x} y:{position.y}");
-            var randomEnemy = enemiesPrefab.ChoseRandom();
+            var randomEnemy = _enemiesPrefab.ChoseRandom();
             var instance = Instantiate(randomEnemy, position, Quaternion.identity);
             _enemies.Add(instance);
             instance.transform.SetParent(boardHolder);
