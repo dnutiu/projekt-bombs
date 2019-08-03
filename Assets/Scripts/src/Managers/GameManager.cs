@@ -14,7 +14,7 @@ namespace src.Managers
         private LevelManager _levelManager;
         private UpgradeManager _upgradeManager;
         private BombsUtilManager _bombsUtilManager;
-        
+
         // External Components
         public GameObject preStageUiPrefab;
         private PlayerController _playerController;
@@ -45,17 +45,17 @@ namespace src.Managers
 
         public void Start()
         {
-            _levelManager.InitBoard();
             StartLevel();
         }
 
         private void StartLevel()
         {
             var levelData = LevelResource.GetLevelData(_gameStateManager.Level);
-            StartCoroutine(PreInitGame());
             _levelManager.SetLevelData(levelData);
+            _levelManager.InitBoard();
+
+            StartCoroutine(PreInitGame());
             _upgradeManager.SetLevelData(levelData);
-            
             _levelManager.InitLevel();
             _playerController.Respawn();
         }
@@ -69,7 +69,7 @@ namespace src.Managers
         {
             return _bombsUtilManager;
         }
-        
+
         private IEnumerator PreInitGame()
         {
             var preStageUi = Instantiate(preStageUiPrefab); // Will destroy itself.

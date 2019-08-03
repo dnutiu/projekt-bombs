@@ -2,12 +2,13 @@ using System;
 using System.Collections.Generic;
 using src.Base;
 using src.Helpers;
+using src.Interfaces;
 using src.Level.src.Level;
 using UnityEngine;
 
 namespace src.Managers
 {
-    public class UpgradeManager : GameplayComponent
+    public class UpgradeManager : GameplayComponent, IDynamicLevelData
     {
         public static UpgradeManager Instance;
         private List<GameObject> _unclaimedUpgrades = new List<GameObject>();

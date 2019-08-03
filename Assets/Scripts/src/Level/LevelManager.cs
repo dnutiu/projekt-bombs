@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using src.Base;
 using src.Helpers;
+using src.Interfaces;
 using src.Level.src.Level;
 using src.Managers;
 using src.Wall;
@@ -9,7 +10,7 @@ using Random = UnityEngine.Random;
 
 namespace src.Level
 {
-    public class LevelManager : GameplayComponent
+    public class LevelManager : GameplayComponent, IDynamicLevelData
     {
         public Count DestructibleWallCount
         {
@@ -31,10 +32,12 @@ namespace src.Level
 
         /* Used to group spawned objects */
         public Transform boardHolder;
+
         /* Holds the starting position of the player */
         public Transform startPosition;
+
         /* Holds references to prefabs for the specified level. */
-        public GameObject indestructibleWallPrefab;
+        private GameObject _indestructibleWallPrefab;
         private GameObject[] _destructibleWallPrefabs;
         private GameObject[] _enemiesPrefab;
 
@@ -46,13 +49,14 @@ namespace src.Level
         /* The size of the board. */
         private const int Columns = 30;
         private const int Rows = 20;
+        private bool _isBoardInitialized;
 
         /* Holds the available positions */
         private readonly List<Vector3> _freeGridPositionsBoard = new List<Vector3>();
         private List<Vector3> _freeGridPositions;
         private List<GameObject> _destructibleWalls;
         private List<GameObject> _enemies;
-        
+
         /* Singletons */
         private GameStateManager _gameStateManager = GameStateManager.Instance;
 
@@ -63,8 +67,9 @@ namespace src.Level
             _enemyCount = levelData.enemyCount;
             _enemiesPrefab = levelData.enemiesPrefab;
             _destructibleWallPrefabs = levelData.destructibleWallsPrefab;
+            _indestructibleWallPrefab = levelData.indestructibleWallsPrefab.ChoseRandom();
         }
-        
+
         /* Modifies walls from _destructibleWalls in order to setup upgrades*/
         private void SetupSpawnables()
         {
@@ -84,13 +89,13 @@ namespace src.Level
                 DebugHelper.LogInfo($"Spawned upgrade at: x:{wall.XCoordinate} y:{wall.YCoordinate}");
                 wall.SpawnsUpgrade();
             }
-            
+
             if (count > wallsSize - 2)
             {
                 Debug.LogWarning("No destructible walls found, cannot spawn exit!");
                 return;
             }
-            
+
             var exitWall = _destructibleWalls[count + 1].GetComponent<DestructibleWall>();
             DebugHelper.LogInfo($"Spawned exit at: x:{exitWall.XCoordinate} y:{exitWall.YCoordinate}");
             exitWall.SpawnsExit();
@@ -100,6 +105,12 @@ namespace src.Level
          * unused positions in a list. */
         public void InitBoard()
         {
+            if (_isBoardInitialized)
+            {
+                /* We only want to initialize the board once since it doesn't change... for now*/
+                return;
+            }
+
             /* We want to iterate over the X axis taking into consideration the startPosition's offset */
             for (var x = startPosition.position.x; x < Columns; x++)
             {
@@ -134,6 +145,8 @@ namespace src.Level
                     _freeGridPositionsBoard.Add(new Vector3(x, y, 0f));
                 }
             }
+
+            _isBoardInitialized = true;
         }
 
         /* Randomly places destructible tiles on the level. */
@@ -148,10 +161,12 @@ namespace src.Level
                 {
                     break;
                 }
+
                 usedPositions.Add(nextPosition);
                 PlaceDestructibleTile(nextPosition);
                 numberOfWallsRemaining -= 1;
             }
+
             foreach (var usedPosition in usedPositions)
             {
                 _freeGridPositions.Remove(usedPosition);
@@ -179,7 +194,7 @@ namespace src.Level
             }
 
             var instance =
-                Instantiate(indestructibleWallPrefab, new Vector3(x, y, 0f), Quaternion.identity);
+                Instantiate(_indestructibleWallPrefab, new Vector3(x, y, 0f), Quaternion.identity);
             instance.transform.SetParent(boardHolder);
             return true;
         }
@@ -234,6 +249,7 @@ namespace src.Level
             {
                 Destroy(wall);
             }
+
             DebugHelper.LogInfo("LevelManager: Cleared level!");
         }
     }
