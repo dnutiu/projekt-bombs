@@ -206,7 +206,6 @@ namespace src.Level
         private void SetupLevelEnemies()
         {
             var numberOfEnemiesToPlace = _enemyCount.RandomIntRange();
-
             _freeGridPositions.ShuffleList();
             _freeGridPositions.RemoveAll(pos => pos.x <= XMaxEnemyPosition && pos.y >= YMinEnemyPosition);
             foreach (var nextPosition in _freeGridPositions)
