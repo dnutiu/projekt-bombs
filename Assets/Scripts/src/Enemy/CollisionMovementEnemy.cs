@@ -1,6 +1,6 @@
 ﻿namespace src.Enemy
 {
-    public class BasicCollisionEnemy : EnemyBase
+    public class CollisionMovementEnemy : EnemyBase
     /* Enemy that will change direction only on collision. */
     {
         protected new void Start()

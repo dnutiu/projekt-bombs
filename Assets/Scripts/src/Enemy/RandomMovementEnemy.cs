@@ -2,7 +2,7 @@
 
 namespace src.Enemy
 {
-    public class EnemyThatRandomChangeDirection : EnemyBase
+    public class RandomMovementEnemy : EnemyBase
     {
         /* Enemy that will move randomly */
         protected new void Start()
