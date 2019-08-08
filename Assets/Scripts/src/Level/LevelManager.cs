@@ -218,14 +218,13 @@ namespace src.Level
             }
         }
 
-        private bool PlaceEnemy(Vector3 position)
+        private void PlaceEnemy(Vector3 position)
         {
             DebugHelper.LogVerbose($"PlaceEnemy: x:{position.x} y:{position.y}");
             var randomEnemy = _enemiesPrefab.ChoseRandom();
             var instance = Instantiate(randomEnemy, position, Quaternion.identity);
-            _enemies.Add(instance);
             instance.transform.SetParent(boardHolder);
-            return true;
+            _enemies.Add(instance);
         }
 
         /* Initializes the level. */
