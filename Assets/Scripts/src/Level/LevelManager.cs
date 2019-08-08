@@ -11,9 +11,9 @@ namespace src.Level
 {
     public class LevelManager : GameplayComponent, IDynamicLevelData
     {
-        /** Extracted them here for easy to change reason */
-        private const int XMaxEnemyPosition = 5;
-        private const int YMinEnemyPosition = -5;
+        /** Safe-zone coordinates to prevent enemies to instantly kill you*/
+        private const int XMaxEnemyPosition = 4;
+        private const int YMinEnemyPosition = -4;
 
         public Count DestructibleWallCount
         {
@@ -205,8 +205,8 @@ namespace src.Level
         private void SetupLevelEnemies()
         {
             var numberOfEnemiesToPlace = _enemyCount.RandomIntRange();
-            _freeGridPositions.ShuffleList();
             _freeGridPositions.RemoveAll(pos => pos.x <= XMaxEnemyPosition && pos.y >= YMinEnemyPosition);
+            _freeGridPositions.ShuffleList();
             foreach (var nextPosition in _freeGridPositions)
             {
                 if (numberOfEnemiesToPlace == 0)
