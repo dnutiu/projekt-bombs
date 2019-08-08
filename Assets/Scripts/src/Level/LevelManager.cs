@@ -6,7 +6,6 @@ using src.Level.src.Level;
 using src.Managers;
 using src.Wall;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace src.Level
 {
