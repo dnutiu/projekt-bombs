@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using src.Helpers;
+using UnityEngine;
 
 namespace src.Enemy
 {
@@ -17,8 +19,7 @@ namespace src.Enemy
             var x = pos.x;
             var y = pos.y;
             if (gameStateManager.IsGamePaused || gameStateManager.IsPlayerMovementForbidden) { return; }
-            if (x == Mathf.Floor(x) &&
-                y == Mathf.Floor(y))
+            if (Math.Abs(x - Mathf.Floor(x)) < 0.1 && Math.Abs(y - Mathf.Floor(y)) < 0.1)
             {
                 if (RandomChange())
                 {
