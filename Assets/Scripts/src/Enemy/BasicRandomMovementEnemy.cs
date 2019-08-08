@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 
-namespace Assets.Scripts.src.Enemy
+namespace src.Enemy
 {
     public class EnemyThatRandomChangeDirection : EnemyBase
     {
+        /* Enemy that will move randomly */
         protected new void Start()
         {
             Speed = 4f;
@@ -12,9 +13,12 @@ namespace Assets.Scripts.src.Enemy
 
         protected new void FixedUpdate()
         {
+            var pos = transform.position;
+            var x = pos.x;
+            var y = pos.y;
             if (gameStateManager.IsGamePaused || gameStateManager.IsPlayerMovementForbidden) { return; }
-            if (transform.position.x == Mathf.Floor(transform.position.x) &&
-                transform.position.y == Mathf.Floor(transform.position.y))
+            if (x == Mathf.Floor(x) &&
+                y == Mathf.Floor(y))
             {
                 if (RandomChange())
                 {

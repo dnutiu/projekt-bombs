@@ -23,7 +23,7 @@ public abstract class EnemyBase : MonoBehaviour, IExplosable
     protected void FixedUpdate()
     {
         if (gameStateManager.IsGamePaused || gameStateManager.IsPlayerMovementForbidden) {return;}
-        Rigidbody2d.MovePosition(Rigidbody2d.position + Direction * Speed * Time.deltaTime);
+        Rigidbody2d.MovePosition(Rigidbody2d.position + Speed * Time.deltaTime * Direction);
     }
 
     public void OnTriggerEnter2D(Collider2D other)

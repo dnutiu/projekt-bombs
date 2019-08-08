@@ -1,9 +1,8 @@
-﻿namespace Assets.Scripts.src.Enemy
+﻿namespace src.Enemy
 {
-    public class EnemyThatChangeDirectionOnlyOnCollision : EnemyBase
+    public class BasicCollisionEnemy : EnemyBase
+    /* Enemy that will change direction only on collision. */
     {
-
-        //Momentan lasam asa, o sa difere probabil la animatii and stats, nu stiu sigur
         protected new void Start()
         {
             Speed = 4f;
