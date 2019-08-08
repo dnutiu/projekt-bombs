@@ -143,6 +143,7 @@ fabric.properties
 
 # TextMesh Pro files
 [Aa]ssets/TextMesh*Pro/
+[Aa]ssets/TextMesh*
 
 # Visual Studio cache directory
 .vs/
@@ -536,6 +537,7 @@ MigrationBackup/
 # Ignore editor plugins
 Assets/Plugins/Editor*
 [Aa]ssets/Plugins/Editor/JetBrains/*
+Assets/TextMesh Pro.meta
 
 # Don't store keystores on Github
 *.keystore
