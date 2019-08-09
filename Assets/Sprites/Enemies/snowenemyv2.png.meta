@@ -1,9 +1,9 @@
 fileFormatVersion: 2
-guid: 7fe20d448d7a54c2a8c561fb5736f00b
+guid: 0c80326efa3e64cfca08717f4109832b
 TextureImporter:
   fileIDToRecycleName:
-    21300000: snowenemy_0
-    21300002: snowenemy_1
+    21300000: snowenemyv2_0
+    21300002: snowenemyv2_1
   externalObjects: {}
   serializedVersion: 9
   mipmaps:
@@ -45,8 +45,8 @@ TextureImporter:
   spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
-  alignment: 0
-  spritePivot: {x: 0.5, y: 0.5}
+  alignment: 6
+  spritePivot: {x: 0, y: 0}
   spritePixelsToUnits: 32
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
@@ -97,7 +97,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: snowenemy_0
+      name: snowenemyv2_0
       rect:
         serializedVersion: 2
         x: 0
@@ -111,13 +111,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 71374260380794020bf4eda4762fc79d
+      spriteID: 7438c6060090f425c97b9b7ae3139618
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: snowenemy_1
+      name: snowenemyv2_1
       rect:
         serializedVersion: 2
         x: 32
@@ -131,7 +131,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9bbeafb8682044fa5a9e69c3848e6cb0
+      spriteID: f7dbd78e1bae2436e83136f597e79ab2
       vertices: []
       indices: 
       edges: []
@@ -139,7 +139,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 789bcfca2d35c4486b7507cacfabd2a2
+    spriteID: d99660caefb6342a987fce720d7946f5
     vertices: []
     indices: 
     edges: []

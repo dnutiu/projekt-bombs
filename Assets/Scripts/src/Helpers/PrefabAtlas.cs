@@ -21,7 +21,7 @@ namespace src.Helpers
             Resources.Load<GameObject>("DevMocks/FlameUpgrade");
 
         /* Enemies */
-        public static readonly GameObject GreenEnemy = Resources.Load<GameObject>("Enemies/Dumber");
-        public static readonly GameObject RedEnemy = Resources.Load<GameObject>("DevMocks/Dumb");
+        public static readonly GameObject GreenEnemy = Resources.Load<GameObject>("Enemies/SnowEnemyRandom");
+        public static readonly GameObject RedEnemy = Resources.Load<GameObject>("Enemies/SnowEnemyCollision");
     }
 }
