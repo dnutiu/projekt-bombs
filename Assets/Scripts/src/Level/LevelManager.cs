@@ -6,15 +6,14 @@ using src.Level.src.Level;
 using src.Managers;
 using src.Wall;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace src.Level
 {
     public class LevelManager : GameplayComponent, IDynamicLevelData
     {
-        /** Extracted them here for easy to change reason */
-        private const int XMaxEnemyPosition = 5;
-        private const int YMinEnemyPosition = -5;
+        /** Safe-zone coordinates to prevent enemies to instantly kill you*/
+        private const int XMaxEnemyPosition = 4;
+        private const int YMinEnemyPosition = -4;
 
         public Count DestructibleWallCount
         {
@@ -206,8 +205,8 @@ namespace src.Level
         private void SetupLevelEnemies()
         {
             var numberOfEnemiesToPlace = _enemyCount.RandomIntRange();
-            _freeGridPositions.ShuffleList();
             _freeGridPositions.RemoveAll(pos => pos.x <= XMaxEnemyPosition && pos.y >= YMinEnemyPosition);
+            _freeGridPositions.ShuffleList();
             foreach (var nextPosition in _freeGridPositions)
             {
                 if (numberOfEnemiesToPlace == 0)
@@ -219,14 +218,13 @@ namespace src.Level
             }
         }
 
-        private bool PlaceEnemy(Vector3 position)
+        private void PlaceEnemy(Vector3 position)
         {
             DebugHelper.LogVerbose($"PlaceEnemy: x:{position.x} y:{position.y}");
             var randomEnemy = _enemiesPrefab.ChoseRandom();
             var instance = Instantiate(randomEnemy, position, Quaternion.identity);
-            _enemies.Add(instance);
             instance.transform.SetParent(boardHolder);
-            return true;
+            _enemies.Add(instance);
         }
 
         /* Initializes the level. */
