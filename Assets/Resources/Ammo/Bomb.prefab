@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7051718864318870241}
   - component: {fileID: 5205340436538485392}
   - component: {fileID: 9038174535399619494}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -111,7 +111,7 @@ GameObject:
   - component: {fileID: 8277411166637495994}
   - component: {fileID: 1412018915745597861}
   - component: {fileID: 662054772667612550}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Bomb
   m_TagString: Bomb
   m_Icon: {fileID: 0}
@@ -198,7 +198,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6508079771898401246}
   - component: {fileID: 2175931883523803554}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: 2DCollider
   m_TagString: Bomb
   m_Icon: {fileID: 0}
