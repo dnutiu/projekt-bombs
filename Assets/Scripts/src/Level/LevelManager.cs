@@ -12,8 +12,8 @@ namespace src.Level
     public class LevelManager : GameplayComponent, IDynamicLevelData
     {
         /** Safe-zone coordinates to prevent enemies to instantly kill you*/
-        private const int XMaxEnemyPosition = 4;
-        private const int YMinEnemyPosition = -4;
+        private const int XMaxEnemyPosition = 5;
+        private const int YMinEnemyPosition = -5;
 
         public Count DestructibleWallCount
         {
