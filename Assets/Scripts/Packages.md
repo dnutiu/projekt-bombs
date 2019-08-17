@@ -6,3 +6,5 @@ Installed Packages:
 ====
 
 Cinemachine 2.2.9
+TextMeshPro 1.4.1
+PixelPerfect 1.0.1
