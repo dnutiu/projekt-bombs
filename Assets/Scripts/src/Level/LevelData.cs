@@ -2,7 +2,6 @@ using src.Helpers;
 
 namespace src.Level
 {
-    using System;
     using UnityEngine;
 
     namespace src.Level
@@ -22,11 +21,16 @@ namespace src.Level
         public static class LevelResource
         {
             private static readonly GameObject[] AllUpgrades =
-                {PrefabAtlas.FlamesIncreaseUpgrade, PrefabAtlas.BombsIncreaseUpgrade, PrefabAtlas.SpeedIncreaseUpgrade};
+            {
+                PrefabAtlas.FlamesIncreaseUpgrade, PrefabAtlas.BombsIncreaseUpgrade, PrefabAtlas.SpeedIncreaseUpgrade,
+                PrefabAtlas.GoldenBombUpgrade
+            };
+
             private static readonly GameObject[] SnowWallsDestructible =
                 {PrefabAtlas.DestructibleSnow, PrefabAtlas.DestructibleHighSnow};
+
             private static readonly GameObject[] SnowWallsIndestructible = {PrefabAtlas.IndestructibleWoodCrate};
-            
+
             /* Used to store information about the level. */
             private static readonly LevelData[] LevelData =
             {
