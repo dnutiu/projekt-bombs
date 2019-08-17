@@ -14,11 +14,11 @@ namespace src.Helpers
 
         /* Upgrades */
         public static readonly GameObject SpeedIncreaseUpgrade = 
-            Resources.Load<GameObject>("DevMocks/SpeedUpgrade");
+            Resources.Load<GameObject>("Ammo/SpeedUpgrade");
         public static readonly GameObject BombsIncreaseUpgrade = 
-            Resources.Load<GameObject>("DevMocks/BombsUpgrade");
+            Resources.Load<GameObject>("Ammo/BombUpgrade");
         public static readonly GameObject FlamesIncreaseUpgrade = 
-            Resources.Load<GameObject>("DevMocks/FlameUpgrade");
+            Resources.Load<GameObject>("Ammo/FlameUpgrade");
 
         /* Enemies */
         public static readonly GameObject GreenEnemy = Resources.Load<GameObject>("Enemies/SnowEnemyRandom");
