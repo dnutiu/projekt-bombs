@@ -19,6 +19,8 @@ namespace src.Helpers
             Resources.Load<GameObject>("Ammo/BombUpgrade");
         public static readonly GameObject FlamesIncreaseUpgrade = 
             Resources.Load<GameObject>("Ammo/FlameUpgrade");
+        public static readonly GameObject GoldenBombUpgrade = 
+            Resources.Load<GameObject>("GoldenBombUpgrade/FlameUpgrade");
 
         /* Enemies */
         public static readonly GameObject GreenEnemy = Resources.Load<GameObject>("Enemies/SnowEnemyRandom");
