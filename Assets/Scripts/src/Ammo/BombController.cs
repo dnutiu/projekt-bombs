@@ -56,7 +56,7 @@ namespace src.Ammo
                 {
                     Debug.Log("Hit something");
                     var key = hit.collider.GetComponent<IExplosable>();
-                    key?.onExplosion();
+                    key?.OnExplosion();
                     break;
                 }
             }
@@ -68,11 +68,11 @@ namespace src.Ammo
         {
             if (!_exploded && other.CompareTag("Explosion"))
             {
-                onExplosion();
+                OnExplosion();
             }
         }
 
-        public void onExplosion()
+        public void OnExplosion()
         {
             CancelInvoke(nameof(Explode));
             Explode();

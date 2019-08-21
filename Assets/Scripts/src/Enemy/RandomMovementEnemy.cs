@@ -1,5 +1,5 @@
 ﻿using System;
-using src.Helpers;
+using src.Base;
 using UnityEngine;
 
 namespace src.Enemy
@@ -13,12 +13,11 @@ namespace src.Enemy
             base.Start();
         }
 
-        protected new void FixedUpdate()
+        protected override void HandleMovement()
         {
             var pos = transform.position;
             var x = pos.x;
             var y = pos.y;
-            if (gameStateManager.IsGamePaused || gameStateManager.IsPlayerMovementForbidden) { return; }
             if (Math.Abs(x - Mathf.Floor(x)) < 0.1 && Math.Abs(y - Mathf.Floor(y)) < 0.1)
             {
                 if (RandomChange())
