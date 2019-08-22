@@ -60,7 +60,7 @@ namespace src.Wall
            // _animator.speed = 10;
         }
 
-        public void onExplosion()
+        public void OnExplosion()
         {
             DebugHelper.LogInfo($"Destructible wall hit by explosion {transform.position}");
             PlayDestroyAnimation();

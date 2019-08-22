@@ -1,4 +1,7 @@
-﻿namespace src.Enemy
+﻿using src.Base;
+using UnityEngine;
+
+namespace src.Enemy
 {
     public class CollisionMovementEnemy : EnemyBase
     /* Enemy that will change direction only on collision. */
@@ -9,10 +12,9 @@
             base.Start();
         }
 
-        protected new void FixedUpdate()
+        protected override void HandleMovement()
         {
-            base.FixedUpdate();
+            Rigidbody2d.MovePosition(Rigidbody2d.position + Speed * Time.deltaTime * Direction);
         }
-
     }
 }

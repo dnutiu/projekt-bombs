@@ -20,7 +20,7 @@ namespace src.Base
         {
             if (other.CompareTag("Explosion"))
             {
-                onExplosion();
+                OnExplosion();
             }
             if (other.CompareTag("Enemy"))
             {
@@ -28,7 +28,7 @@ namespace src.Base
             }
         }
 
-        public void onExplosion()
+        public void OnExplosion()
         {
             DebugHelper.LogInfo("Player hit by explosion");
         }

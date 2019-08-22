@@ -1,115 +1,136 @@
-﻿using src.Helpers;
-using src.Managers;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
+using src.Helpers;
+using src.Managers;
 using UnityEngine;
 
-public abstract class EnemyBase : MonoBehaviour, IExplosable
+namespace src.Base
 {
-
-    protected Vector2[] _directions = { Vector3.up, Vector3.down, Vector3.left, Vector3.right };
-    protected readonly GameStateManager gameStateManager = GameStateManager.Instance;
-
-    protected Rigidbody2D Rigidbody2d { get; set; }
-    protected float Speed { get; set; }
-    protected Vector2 Direction { get; set; }
-
-    private List<Vector3> _allowedDirections = new List<Vector3>();
-    private bool _isStucked = false;
-    private System.Random _random = new System.Random();
-
-    // Start is called before the first frame update
-    protected void Start()
+    public abstract class EnemyBase : MonoBehaviour, IExplosable
     {
-        Direction = _directions.ChoseRandom();
-        Rigidbody2d = GetComponent<Rigidbody2D>();
-    }
+        private readonly Vector2[] _directions = {Vector3.up, Vector3.down, Vector3.left, Vector3.right};
+        private readonly GameStateManager _gameStateManager = GameStateManager.Instance;
 
-    // Update is called once per frame
-    protected void FixedUpdate()
-    {
-        if (gameStateManager.IsGamePaused || gameStateManager.IsPlayerMovementForbidden) {return;}
-        if(_isStucked)
+        protected Rigidbody2D Rigidbody2d { get; set; }
+        private Collider2D Collider2D { get; set; }
+        private Animator Animator { get; set; }
+        protected float Speed { get; set; }
+        protected Vector2 Direction { get; set; }
+
+        private readonly List<Vector3> _allowedDirections = new List<Vector3>();
+        private bool _isStuck;
+        private bool _isDead;
+    
+        private static readonly int AnimExplode = Animator.StringToHash("animExplode");
+
+        // Start is called before the first frame update
+        protected void Start()
         {
+            Direction = _directions.ChoseRandom();
+            Rigidbody2d = GetComponent<Rigidbody2D>();
+            Collider2D = GetComponent<Collider2D>();
+            Animator = GetComponentInChildren<Animator>();
+        }
+
+        // Update is called once per frame
+        protected void FixedUpdate()
+        {
+            if (_gameStateManager.IsGamePaused || _gameStateManager.IsPlayerMovementForbidden || _isDead)
+            {
+                return;
+            }
+
+            if (_isStuck)
+            {
+                Unstuck();
+            }
+            HandleMovement();
+        }
+
+        /// <summary>
+        ///  This function is implemented by subclasses and should provided personalized movement logic.
+        /// </summary>
+        protected abstract void HandleMovement();
+
+        public void OnTriggerEnter2D(Collider2D other)
+        {
+            if (other.CompareTag("Explosion"))
+            {
+                OnExplosion();
+            }
+        }
+
+        public void OnExplosion()
+        {
+            Collider2D.enabled = false;
+            _isDead = true;
+            Animator.SetTrigger(AnimExplode);
+            Destroy(gameObject, 1);
+        }
+
+        public void OnCollisionEnter2D(Collision2D col)
+        {
+            MoveToCenterOfTheCell();
             Unstuck();
         }
-        Rigidbody2d.MovePosition(Rigidbody2d.position + Speed * Time.deltaTime * Direction);
-    }
 
-    public void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("Explosion"))
+        public void OnCollisionStay2D(Collision2D col)
         {
-            onExplosion();
+            MoveToCenterOfTheCell();
+            Unstuck();
         }
-    }
 
-    public void onExplosion()
-    {
-        Destroy(gameObject);
-    }
-
-    public void OnCollisionEnter2D(Collision2D col)
-    {
-        MoveToCenterOfTheCell();
-        Unstuck();
-    }
-
-    public void OnCollisionStay2D(Collision2D col)
-    {
-        MoveToCenterOfTheCell();
-        Unstuck();
-    }
-
-    protected void MoveToCenterOfTheCell()
-    {
-        var absX = Mathf.RoundToInt(transform.position.x);
-        var absY = Mathf.RoundToInt(transform.position.y);
-        Vector2 position = new Vector2(absX, absY);
-        transform.SetPositionAndRotation(position, Quaternion.identity);
-    }
-
-    protected Vector2 ChooseRandomDirection()
-    {
-        return _directions.ChoseRandom();
-    }
-
-    protected Vector2 ChooseRandomExceptCertainDirection(Vector2 direction)
-    {
-        return _directions.ChoseRandomExcept(direction);
-    }
-
-    private void Unstuck()
-    {
-        _allowedDirections.Clear();
-        StartCoroutine(CheckForObstacle(Vector3.down));
-        StartCoroutine(CheckForObstacle(Vector3.left));
-        StartCoroutine(CheckForObstacle(Vector3.up));
-        StartCoroutine(CheckForObstacle(Vector3.right));
-        if(_allowedDirections.Count == 0)
+        protected void MoveToCenterOfTheCell()
         {
-            _isStucked = true;
+            var position = transform.position;
+            var absX = Mathf.RoundToInt(position.x);
+            var absY = Mathf.RoundToInt(position.y);
+            var newPosition = new Vector2(absX, absY);
+            transform.SetPositionAndRotation(newPosition, Quaternion.identity);
         }
-        else
+
+        protected Vector2 ChooseRandomDirection()
         {
-            var index = _random.Next(_allowedDirections.Count);
-            Direction = _allowedDirections[index];
-            _isStucked = false;
+            return _directions.ChoseRandom();
         }
-    }
 
-    private IEnumerator CheckForObstacle(Vector3 direction)
-    {
-        var layerMask = (1 << 8) | (1 << 9);
-        var currentPosition = transform.position;
+        protected Vector2 ChooseRandomExceptCertainDirection(Vector2 direction)
+        {
+            return _directions.ChoseRandomExcept(direction);
+        }
 
-        var hit = Physics2D.Raycast(new Vector2(currentPosition.x + 0.5f, currentPosition.y + 0.5f), direction, 1, layerMask);
+        private void Unstuck()
+        {
+            _allowedDirections.Clear();
+            StartCoroutine(CheckForObstacle(Vector3.down));
+            StartCoroutine(CheckForObstacle(Vector3.left));
+            StartCoroutine(CheckForObstacle(Vector3.up));
+            StartCoroutine(CheckForObstacle(Vector3.right));
+            if (_allowedDirections.Count == 0)
+            {
+                _isStuck = true;
+            }
+            else
+            {
+                Direction = _allowedDirections.PeekRandom();
+                _isStuck = false;
+            }
+        }
 
-       if (!hit.collider)
-       {
-            _allowedDirections.Add(direction);
-       }
+        private IEnumerator CheckForObstacle(Vector3 direction)
+        {
+            const int layerMask = 1 << 8; // Block layer
+            var currentPosition = transform.position;
 
-        yield return new WaitForSeconds(0.05f);
+            var hit = Physics2D.Raycast(new Vector2(currentPosition.x + 0.5f, currentPosition.y + 0.5f), 
+                direction, 1, layerMask);
+
+            if (!hit.collider)
+            {
+                _allowedDirections.Add(direction);
+            }
+
+            yield return new WaitForSeconds(0.05f);
+        }
     }
 }

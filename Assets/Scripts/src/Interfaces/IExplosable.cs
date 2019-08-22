@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IExplosable
 { 
-    void onExplosion();
+    void OnExplosion();
 }

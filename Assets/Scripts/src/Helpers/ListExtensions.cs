@@ -12,7 +12,7 @@ namespace src.Helpers
             var max = list.Count - 1;
             for (var i = min; i < max; i++)
             {
-                var randomPos = Mathf.FloorToInt(Random.Range(min, max));
+                var randomPos = Random.Range(min, max);
 
                 /* Swap elements in list */
                 var aux = list[randomPos];
@@ -23,10 +23,16 @@ namespace src.Helpers
 
         public static T PopRandom<T>(this IList<T> list)
         {
-            var randomIndex = Mathf.FloorToInt(Random.Range(0, list.Count - 1));
+            var randomIndex = Random.Range(0, list.Count - 1);
             var elem = list[randomIndex];
             list.RemoveAt(randomIndex);
             return elem;
+        }
+        
+        public static T PeekRandom<T>(this IList<T> list)
+        {
+            var randomIndex = Random.Range(0, list.Count - 1);
+            return list[randomIndex];
         }
     }
 }
