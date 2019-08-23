@@ -34,10 +34,10 @@ namespace src.Level
         }
 
         /* Used to group spawned objects */
-        public Transform boardHolder;
+        private Transform _boardHolder;
 
         /* Holds the starting position of the player */
-        public Transform startPosition;
+        private Transform _startPosition;
 
         /* Holds references to prefabs for the specified level. */
         private GameObject _indestructibleWallPrefab;
@@ -61,7 +61,14 @@ namespace src.Level
         private List<GameObject> _enemies;
 
         /* Singletons */
-        private GameStateManager _gameStateManager = GameStateManager.Instance;
+        private GameStateManager _gameStateManager;
+
+        public void Awake()
+        {
+            _startPosition = GameObject.Find("RespawnPosition").GetComponent<Transform>();
+            _boardHolder = GameObject.Find("Grid").GetComponent<Transform>();
+            _gameStateManager = GameStateManager.instance;
+        }
 
         public void SetLevelData(LevelData levelData)
         {
@@ -115,9 +122,9 @@ namespace src.Level
             }
 
             /* We want to iterate over the X axis taking into consideration the startPosition's offset */
-            for (var x = startPosition.position.x; x < Columns; x++)
+            for (var x = _startPosition.position.x; x < Columns; x++)
             {
-                for (var y = startPosition.position.y; y > Rows * -1; y--)
+                for (var y = _startPosition.position.y; y > Rows * -1; y--)
                 {
                     /* We want the following positions to be a safe zone. */
                     /* Don't place anything on starting position */
@@ -182,7 +189,7 @@ namespace src.Level
             var randomWall = _destructibleWallPrefabs.ChoseRandom();
             var instance = Instantiate(randomWall, position, Quaternion.identity);
             _destructibleWalls.Add(instance);
-            instance.transform.SetParent(boardHolder);
+            instance.transform.SetParent(_boardHolder);
         }
 
         private bool PlaceIndestructibleTile(float x, float y)
@@ -198,7 +205,7 @@ namespace src.Level
 
             var instance =
                 Instantiate(_indestructibleWallPrefab, new Vector3(x, y, 0f), Quaternion.identity);
-            instance.transform.SetParent(boardHolder);
+            instance.transform.SetParent(_boardHolder);
             return true;
         }
 
@@ -223,7 +230,7 @@ namespace src.Level
             DebugHelper.LogVerbose($"PlaceEnemy: x:{position.x} y:{position.y}");
             var randomEnemy = _enemiesPrefab.ChoseRandom();
             var instance = Instantiate(randomEnemy, position, Quaternion.identity);
-            instance.transform.SetParent(boardHolder);
+            instance.transform.SetParent(_boardHolder);
             _enemies.Add(instance);
         }
 

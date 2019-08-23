@@ -8,7 +8,7 @@ namespace src.Player
 {
     public class PlayerController : GameplayComponent, IExplosable
     {
-        private readonly GameStateManager _gameStateManager = GameStateManager.Instance;
+        private GameStateManager _gameStateManager;
         private Rigidbody2D _rigidbody2d;
         private Collider2D _collider2D;
         private Transform _respawnPosition;
@@ -25,14 +25,16 @@ namespace src.Player
         private bool _isDead;
 
         protected void Start()
-        {
+        {   
+            _gameStateManager = GameStateManager.instance;
+            _playerUpgrade = PlayerUpgrade.instance;
+            
             _rigidbody2d = GetComponent<Rigidbody2D>();
             _collider2D = GetComponent<Collider2D>();
             _animator = GetComponentInChildren<Animator>();
             _respawnPosition = GameObject.Find("RespawnPosition").transform;
             _bombsSpawner = GameObject.Find("BombSpawner").GetComponent<BombsSpawner>();
-            
-            _playerUpgrade = PlayerUpgrade.Instance;
+
             movementSpeed = _playerUpgrade.GetMovementSpeed();
             _playerUpgrade.PlayerSpeed += OnSpeedUpgrade;
 

@@ -11,7 +11,7 @@ namespace src.Ammo
         public GameObject explosionPrefab;
 
         private BombCameraShake _cameraShake;
-        private readonly BombsUtilManager _bombsUtil = BombsUtilManager.Instance;
+        private readonly BombsUtilManager _bombsUtil = BombsUtilManager.instance;
         private bool _exploded;
 
         // Start is called before the first frame update

@@ -12,7 +12,7 @@ namespace src.Wall
 
         private void Start()
         {
-            _gameManager = GameManager.Instance;
+            _gameManager = GameManager.instance;
             _collider2D = GetComponent<Collider2D>();
         }
 

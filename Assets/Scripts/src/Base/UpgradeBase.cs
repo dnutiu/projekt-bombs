@@ -6,13 +6,13 @@ namespace src.Base
 {
     public class UpgradeBase : GameplayComponent, IUpgrade
     {
-        protected GameManager GameManager;
+        protected GameManager gameManager;
         private UpgradeManager _upgradeManager;
 
         public void Start()
         {
-            GameManager = GameManager.Instance;
-            _upgradeManager = UpgradeManager.Instance;
+            gameManager = GameManager.instance;
+            _upgradeManager = UpgradeManager.instance;
         }
 
         public virtual void PerformUpgrade()

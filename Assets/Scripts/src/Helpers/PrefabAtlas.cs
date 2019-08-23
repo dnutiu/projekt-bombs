@@ -4,6 +4,10 @@ namespace src.Helpers
 {
     public static class PrefabAtlas
     {
+        /* UI */
+        public static readonly GameObject PreStageUi =
+            Resources.Load<GameObject>("UI/PreStageUI");
+        
         /* Snow Walls */
         public static readonly GameObject DestructibleHighSnow =
             Resources.Load<GameObject>("Walls/destructible_high_snow");

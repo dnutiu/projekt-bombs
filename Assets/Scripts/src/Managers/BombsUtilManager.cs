@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
+using src.Base;
 using UnityEngine;
 
 namespace src.Managers
 {
-    public sealed class BombsUtilManager
+    public sealed class BombsUtilManager : GameplayComponent
     {
         private readonly HashSet<Vector3> _usedPosition = new HashSet<Vector3>();
 
@@ -20,11 +21,19 @@ namespace src.Managers
 
         public float ExplosionDuration { get; } = 0.55f;
 
-        private BombsUtilManager()
+        public static BombsUtilManager instance;
+        
+        public void Awake()
         {
+            if (instance == null)
+            {
+                instance = this;
+            }
+            else if (instance != null)
+            {
+                Destroy(gameObject);
+            }
         }
-
-        public static BombsUtilManager Instance { get; } = new BombsUtilManager();
 
         public void IncreasePower()
         {

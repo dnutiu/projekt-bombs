@@ -1,4 +1,5 @@
-﻿using src.Base;
+﻿using System;
+using src.Base;
 using src.Managers;
 using UnityEngine;
 
@@ -8,12 +9,18 @@ namespace src.Ammo
     {
         public GameObject bombPrefab;
 
-        private readonly BombsUtilManager _bombsUtil = BombsUtilManager.Instance;
+        private BombsUtilManager _bombsUtil;
 
-        public void PlaceBomb(Transform transform)
+        public void Start()
         {
-            var absX = Mathf.RoundToInt(transform.position.x);
-            var absY = Mathf.RoundToInt(transform.position.y);
+            _bombsUtil = BombsUtilManager.instance;
+        }
+
+        public void PlaceBomb(Transform location)
+        {
+            var position1 = location.position;
+            var absX = Mathf.RoundToInt(position1.x);
+            var absY = Mathf.RoundToInt(position1.y);
             var position = new Vector2(absX, absY);
             if (_bombsUtil.CanPlaceBomb(position))
             {

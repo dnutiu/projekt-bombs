@@ -18,7 +18,7 @@ namespace src.Wall
 
         private void Start()
         {
-            _upgradeManager = GameManager.Instance.GetUpgradeManager();
+            _upgradeManager = GameManager.instance.GetUpgradeManager();
             _animator = GetComponentInChildren<Animator>();
            // _animator.speed = 0;
         }
