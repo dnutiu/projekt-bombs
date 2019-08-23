@@ -15,27 +15,8 @@ namespace src.Level
         private const int XMaxEnemyPosition = 5;
         private const int YMinEnemyPosition = -5;
 
-        public Count DestructibleWallCount
-        {
-            get => _destructibleWallCount;
-            set => _destructibleWallCount = value;
-        }
-
-        public Count UpgradesCount
-        {
-            get => _upgradesCount;
-            set => _upgradesCount = value;
-        }
-
-        public Count EnemyCount
-        {
-            get => _enemyCount;
-            set => _enemyCount = value;
-        }
-
         /* Used to group spawned objects */
         private Transform _boardHolder;
-
         /* Holds the starting position of the player */
         private Transform _startPosition;
 
@@ -57,6 +38,8 @@ namespace src.Level
         /* Holds the available positions */
         private readonly List<Vector3> _freeGridPositionsBoard = new List<Vector3>();
         private List<Vector3> _freeGridPositions;
+        
+        /* Holds initialized game objects */
         private List<GameObject> _destructibleWalls;
         private List<GameObject> _enemies;
 
@@ -163,7 +146,7 @@ namespace src.Level
         private void SetupLevelDestructibleWalls()
         {
             var numberOfWallsRemaining = _destructibleWallCount.RandomIntRange();
-            List<Vector3> usedPositions = new List<Vector3>();
+            var usedPositions = new List<Vector3>();
             _freeGridPositions.ShuffleList();
             foreach (var nextPosition in _freeGridPositions)
             {
