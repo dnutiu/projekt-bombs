@@ -18,17 +18,19 @@ namespace src.Helpers
 
         /* Upgrades */
         public static readonly GameObject SpeedIncreaseUpgrade = 
-            Resources.Load<GameObject>("Ammo/SpeedUpgrade");
+            Resources.Load<GameObject>("Items/SpeedUpgrade");
         public static readonly GameObject BombsIncreaseUpgrade = 
-            Resources.Load<GameObject>("Ammo/BombUpgrade");
+            Resources.Load<GameObject>("Items/BombUpgrade");
         public static readonly GameObject FlamesIncreaseUpgrade = 
-            Resources.Load<GameObject>("Ammo/FlameUpgrade");
+            Resources.Load<GameObject>("Items/FlameUpgrade");
         public static readonly GameObject GoldenBombUpgrade = 
-            Resources.Load<GameObject>("GoldenBombUpgrade/FlameUpgrade");
+            Resources.Load<GameObject>("Items/GoldenBombUpgrade");
         
         /* Items */
         public static readonly GameObject PlayerBomb = 
-            Resources.Load<GameObject>("Ammo/Bomb");
+            Resources.Load<GameObject>("Items/Bomb");
+        public static readonly GameObject BombExplosion = 
+            Resources.Load<GameObject>("Items/BombExplosion");
 
         /* Enemies */
         public static readonly GameObject GreenEnemy = Resources.Load<GameObject>("Enemies/SnowEnemyRandom");
