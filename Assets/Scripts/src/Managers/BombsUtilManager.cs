@@ -6,22 +6,18 @@ namespace src.Managers
 {
     public sealed class BombsUtilManager : GameplayComponent
     {
-        private readonly HashSet<Vector3> _usedPosition = new HashSet<Vector3>();
+        public static BombsUtilManager instance;
+        
+        public int power = 3;
+        public int allowedBombs = 2;
+        public int placedBombs = 0;
+        public float timer = 3.0f;
+        public float explosionDuration = 0.55f;
 
+        
+        private readonly HashSet<Vector3> _usedPosition = new HashSet<Vector3>();
         private const int MaxPower = 7;
         private const int MaxAllowedBombs = 10;
-
-        public int Power { get; private set; } = 3;
-
-        public int AllowedBombs { get; private set; } = 2;
-
-        public int PlacedBombs { get; private set; } = 0;
-
-        public float Timer { get; } = 3.0f;
-
-        public float ExplosionDuration { get; } = 0.55f;
-
-        public static BombsUtilManager instance;
         
         public void Awake()
         {
@@ -37,41 +33,41 @@ namespace src.Managers
 
         public void IncreasePower()
         {
-            if (Power <= MaxPower)
+            if (power <= MaxPower)
             {
-                Power++;
+                power++;
             }
         }
 
         public void IncreaseAllowedBombs()
         {
-            if (AllowedBombs <= MaxAllowedBombs)
+            if (allowedBombs <= MaxAllowedBombs)
             {
-                AllowedBombs++;
+                allowedBombs++;
             }
         }
 
-        public void PlaceBomb(Vector3 position)
+        public void RegisterBomb(Vector3 position)
         {
             if (CanPlaceBomb(position))
             {
-                PlacedBombs++;
+                placedBombs++;
                 _usedPosition.Add(position);
             }
         }
 
-        public void RemoveBomb(Vector3 position)
+        public void UnregisterBomb(Vector3 position)
         {
             if (_usedPosition.Contains(position))
             {
-                PlacedBombs--;
+                placedBombs--;
                 _usedPosition.Remove(position);
             }
         }
 
         public bool CanPlaceBomb(Vector3 position)
         {
-            return (!_usedPosition.Contains(position) && (PlacedBombs < AllowedBombs));
+            return (!_usedPosition.Contains(position) && (placedBombs < allowedBombs));
         }
     }
 }

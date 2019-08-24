@@ -18,7 +18,7 @@ namespace src.Ammo
         void Start()
         {
             _cameraShake = GameObject.Find("VCAM1").GetComponent<BombCameraShake>();
-            Invoke(nameof(Explode), _bombsUtil.Timer);
+            Invoke(nameof(Explode), _bombsUtil.timer);
         }
 
         void Explode()
@@ -42,7 +42,7 @@ namespace src.Ammo
         private IEnumerator CreateExplosions(Vector3 direction)
         {
             var currentPosition = transform.position;
-            for (var i = 1; i < _bombsUtil.Power; i++)
+            for (var i = 1; i < _bombsUtil.power; i++)
             {
                 var hit = Physics2D.Raycast(new Vector2(currentPosition.x + 0.5f,
                         currentPosition.y + 0.5f), direction, i, 1 << 8);
@@ -54,7 +54,6 @@ namespace src.Ammo
                 }
                 else
                 {
-                    Debug.Log("Hit something");
                     var key = hit.collider.GetComponent<IExplosable>();
                     key?.OnExplosion();
                     break;
@@ -79,8 +78,9 @@ namespace src.Ammo
         }
 
         public void OnDestroy()
-        {
-            _bombsUtil.RemoveBomb(transform.position);
+        { 
+            DebugHelper.LogError("UNREGISTERED BOMB");
+            _bombsUtil.UnregisterBomb(transform.position);
         }
     }
 }

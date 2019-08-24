@@ -30,7 +30,7 @@ namespace src.Ammo
         private IEnumerator _startCameraShake()
         {
             SetCameraNoise(amplitudeGain, frequencyGain);
-            yield return new WaitForSeconds(_bombsUtilManager.ExplosionDuration);
+            yield return new WaitForSeconds(_bombsUtilManager.explosionDuration);
             SetCameraNoise(0, 0);
         }
 
