@@ -49,25 +49,21 @@ namespace src.Managers
 
         public void RegisterBomb(Vector3 position)
         {
-            if (CanPlaceBomb(position))
-            {
-                placedBombs++;
-                _usedPosition.Add(position);
-            }
+            if (!CanPlaceBomb(position)) return;
+            placedBombs++;
+            _usedPosition.Add(position);
         }
 
         public void UnregisterBomb(Vector3 position)
         {
-            if (_usedPosition.Contains(position))
-            {
-                placedBombs--;
-                _usedPosition.Remove(position);
-            }
+            if (!_usedPosition.Contains(position)) return;
+            placedBombs--;
+            _usedPosition.Remove(position);
         }
 
         public bool CanPlaceBomb(Vector3 position)
         {
-            return (!_usedPosition.Contains(position) && (placedBombs < allowedBombs));
+            return !_usedPosition.Contains(position) && placedBombs < allowedBombs;
         }
     }
 }
