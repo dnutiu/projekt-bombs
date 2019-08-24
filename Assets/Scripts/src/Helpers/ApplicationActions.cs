@@ -5,7 +5,7 @@ namespace src.Helpers
 {
     public static class ApplicationActions
     {
-        private static GameStateManager _gameStateManager = GameStateManager.Instance;
+        private static GameStateManager _gameStateManager = GameStateManager.instance;
         
         public static void QuitGame()
         {

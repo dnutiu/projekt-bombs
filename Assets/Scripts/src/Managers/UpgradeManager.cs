@@ -10,17 +10,17 @@ namespace src.Managers
 {
     public class UpgradeManager : GameplayComponent, IDynamicLevelData
     {
-        public static UpgradeManager Instance;
+        public static UpgradeManager instance;
         private List<GameObject> _unclaimedUpgrades = new List<GameObject>();
         private GameObject[] _upgradePrefabs;
 
         private void Awake()
         {
-            if (Instance == null)
+            if (instance == null)
             {
-                Instance = this;
+                instance = this;
             }
-            else if (Instance != null)
+            else if (instance != null)
             {
                 Destroy(gameObject);
             }

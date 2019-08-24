@@ -6,10 +6,10 @@ using UnityEngine;
 
 namespace src.Base
 {
-    public abstract class EnemyBase : MonoBehaviour, IExplosable
+    public abstract class EnemyBase : GameplayComponent, IExplosable
     {
         private readonly Vector2[] _directions = {Vector3.up, Vector3.down, Vector3.left, Vector3.right};
-        private readonly GameStateManager _gameStateManager = GameStateManager.Instance;
+        private readonly GameStateManager _gameStateManager = GameStateManager.instance;
 
         protected Rigidbody2D Rigidbody2d { get; set; }
         private Collider2D Collider2D { get; set; }

@@ -7,7 +7,7 @@ namespace src.UI
 {
     public class PreStageUiScript : GameplayComponent
     {
-        private readonly GameStateManager _gameStateManager = GameStateManager.Instance;
+        private readonly GameStateManager _gameStateManager = GameStateManager.instance;
         private Text _stageText;
         
         public void Start()

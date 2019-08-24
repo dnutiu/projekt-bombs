@@ -6,7 +6,7 @@ namespace src.Upgrade
     {
         public override void PerformUpgrade()
         {
-            var bombManager = GameManager.GetBombsUtilManager();
+            var bombManager = gameManager.GetBombsUtilManager();
             bombManager.IncreasePower();
         }
     }

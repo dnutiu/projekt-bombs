@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using src.Ammo;
 using src.Helpers;
 using src.Level;
 using src.Level.src.Level;
@@ -10,23 +9,22 @@ namespace src.Managers
 {
     public class GameManager : MonoBehaviour
     {
-        public static GameManager Instance;
+        public static GameManager instance;
+        
+        // Inner Components
+        private PlayerController _playerController;
+        private GameStateManager _gameStateManager;
         private LevelManager _levelManager;
         private UpgradeManager _upgradeManager;
         private BombsUtilManager _bombsUtilManager;
 
-        // External Components
-        public GameObject preStageUiPrefab;
-        private PlayerController _playerController;
-        private readonly GameStateManager _gameStateManager = GameStateManager.Instance;
-
         public void Awake()
         {
-            if (Instance == null)
+            if (instance == null)
             {
-                Instance = this;
+                instance = this;
             }
-            else if (Instance != null)
+            else if (instance != null)
             {
                 Destroy(gameObject);
             }
@@ -34,10 +32,12 @@ namespace src.Managers
             /* Don't destroy when reloading the scene */
             DontDestroyOnLoad(gameObject);
 
-            // Load inner components
-            _levelManager = GetComponent<LevelManager>();
-            _upgradeManager = GetComponent<UpgradeManager>();
-            _bombsUtilManager = BombsUtilManager.Instance;
+            // Load singletons
+            _bombsUtilManager = gameObject.AddComponent<BombsUtilManager>();
+            _gameStateManager = gameObject.AddComponent<GameStateManager>();
+            _levelManager = gameObject.AddComponent<LevelManager>();
+            _upgradeManager = gameObject.AddComponent<UpgradeManager>();
+            gameObject.AddComponent<PlayerUpgrade>();
 
             // Load external components
             _playerController = GameObject.Find("Player").GetComponent<PlayerController>();
@@ -72,7 +72,7 @@ namespace src.Managers
 
         private IEnumerator PreInitGame()
         {
-            var preStageUi = Instantiate(preStageUiPrefab); // Will destroy itself.
+            var preStageUi = Instantiate(PrefabAtlas.PreStageUi); // Will destroy itself.
             preStageUi.SetActive(true);
             yield return new WaitForSeconds(1f);
             Destroy(preStageUi);

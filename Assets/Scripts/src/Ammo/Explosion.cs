@@ -5,7 +5,7 @@ namespace src.Ammo
 {
     public class Explosion : GameplayComponent
     {
-        private readonly BombsUtilManager _bombUtil = BombsUtilManager.Instance;
+        private readonly BombsUtilManager _bombUtil = BombsUtilManager.instance;
 
         public void Start()
         {

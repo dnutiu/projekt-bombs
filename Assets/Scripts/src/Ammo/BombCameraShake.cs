@@ -8,7 +8,7 @@ namespace src.Ammo
 {
     public class BombCameraShake : GameplayComponent
     {
-        private readonly BombsUtilManager _bombsUtilManager = BombsUtilManager.Instance;
+        private BombsUtilManager _bombsUtilManager;
         public float amplitudeGain = 3f;
         public float frequencyGain = 3f;
 
@@ -18,6 +18,7 @@ namespace src.Ammo
         // Start is called before the first frame update
         private void Start()
         {
+            _bombsUtilManager = BombsUtilManager.instance;
             _virtualCamera = GetComponent<CinemachineVirtualCamera>();
             _noiseMachine = _virtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
         }

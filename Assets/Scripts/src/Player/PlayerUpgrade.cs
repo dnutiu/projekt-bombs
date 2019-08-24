@@ -1,16 +1,25 @@
+using src.Base;
+
 namespace src.Player
 {
-    public class PlayerUpgrade
+    public class PlayerUpgrade : GameplayComponent
     {
         public delegate void IncreaseSpeedDelegate(float speed);
-        public static PlayerUpgrade Instance = new PlayerUpgrade();
+        public static PlayerUpgrade instance;
         public event IncreaseSpeedDelegate PlayerSpeed;
         public const float MaxPlayerSpeed = 8f;
         private float _movementSpeed = 4f;
 
-        private PlayerUpgrade()
+        public void Awake()
         {
-            
+            if (instance == null)
+            {
+                instance = this;
+            }
+            else if (instance != null)
+            {
+                Destroy(gameObject);
+            }
         }
 
         public float GetMovementSpeed()
@@ -25,7 +34,7 @@ namespace src.Player
                 return;
             }
             _movementSpeed += speed;
-            PlayerSpeed.Invoke(speed);
+            PlayerSpeed?.Invoke(speed);
         }
     }
 }

@@ -7,7 +7,7 @@ namespace src.Upgrade
     {
         public override void PerformUpgrade()
         {
-            var player = PlayerUpgrade.Instance;
+            var player = PlayerUpgrade.instance;
             player.IncreaseSpeed(.5f);
         }
     }

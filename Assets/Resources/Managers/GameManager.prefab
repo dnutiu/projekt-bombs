@@ -10,8 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 158905820630581587}
   - component: {fileID: 158905820630581586}
-  - component: {fileID: 158905820630581596}
-  - component: {fileID: 6316647355651322741}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -47,31 +45,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   preStageUiPrefab: {fileID: 4994633962466276707, guid: 1f5ebc13237e070449ea8bc9e8b07ac8,
     type: 3}
---- !u!114 &158905820630581596
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 158905820630581597}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 308dfc6b26c3b422faf1717231fc888b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  boardHolder: {fileID: 0}
-  startPosition: {fileID: 0}
-  indestructibleWallPrefab: {fileID: 5996206011854593075, guid: 84b92ac1e96d940bda97d1b1125887d7,
-    type: 3}
---- !u!114 &6316647355651322741
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 158905820630581597}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e64481d2e18e4b6ca4f22926a5061450, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
