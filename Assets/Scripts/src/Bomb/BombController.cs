@@ -4,7 +4,7 @@ using src.Helpers;
 using src.Managers;
 using UnityEngine;
 
-namespace src.Ammo
+namespace src.Bomb
 {
     public class BombController : GameplayComponent, IExplosable
     {

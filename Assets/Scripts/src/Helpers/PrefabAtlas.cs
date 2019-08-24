@@ -27,7 +27,7 @@ namespace src.Helpers
             Resources.Load<GameObject>("Items/GoldenBombUpgrade");
         
         /* Items */
-        public static readonly GameObject PlayerBomb = 
+        public static readonly GameObject Bomb = 
             Resources.Load<GameObject>("Items/Bomb");
         public static readonly GameObject BombExplosion = 
             Resources.Load<GameObject>("Items/BombExplosion");

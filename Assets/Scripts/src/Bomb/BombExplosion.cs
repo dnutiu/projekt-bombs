@@ -1,8 +1,7 @@
 ﻿using src.Base;
-using src.Helpers;
 using src.Managers;
 
-namespace src.Ammo
+namespace src.Bomb
 {
     public class BombExplosion : GameplayComponent
     {

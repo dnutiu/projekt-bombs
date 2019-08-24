@@ -4,7 +4,7 @@ using src.Base;
 using src.Managers;
 using UnityEngine;
 
-namespace src.Ammo
+namespace src.Bomb
 {
     public class BombCameraShake : GameplayComponent
     {

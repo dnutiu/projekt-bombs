@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using src.Ammo;
 using src.Base;
 using src.Helpers;
 using src.Managers;
@@ -151,7 +150,7 @@ namespace src.Player
             var newPosition = new Vector2(absX, absY);
             if (!_bombsUtil.CanPlaceBomb(newPosition)) return;
             
-            Instantiate(PrefabAtlas.PlayerBomb, newPosition, Quaternion.identity);
+            Instantiate(PrefabAtlas.Bomb, newPosition, Quaternion.identity);
             _bombsUtil.RegisterBomb(newPosition);
         }
         
