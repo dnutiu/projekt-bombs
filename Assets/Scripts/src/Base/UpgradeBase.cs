@@ -1,5 +1,7 @@
 using src.Interfaces;
 using src.Managers;
+using src.Player;
+using src.Upgrade;
 using UnityEngine;
 
 namespace src.Base
@@ -8,6 +10,7 @@ namespace src.Base
     {
         protected GameManager gameManager;
         private UpgradeManager _upgradeManager;
+        protected PlayerController _playerToUpgrade;
 
         public void Start()
         {
@@ -23,6 +26,7 @@ namespace src.Base
         public void OnTriggerEnter2D(Collider2D other)
         {
             if (!other.CompareTag("Player")) return;
+            _playerToUpgrade = other.GetComponent<PlayerController>();
             PerformUpgrade();
             _upgradeManager.ClaimUpgrade(gameObject);
             Destroy(gameObject);

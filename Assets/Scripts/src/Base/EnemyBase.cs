@@ -65,7 +65,7 @@ namespace src.Base
             Collider2D.enabled = false;
             _isDead = true;
             Animator.SetTrigger(AnimExplode);
-            Destroy(gameObject, 1);
+            Destroy(gameObject, 0.7f);
         }
 
         public void OnCollisionEnter2D(Collision2D col)

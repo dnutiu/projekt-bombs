@@ -29,14 +29,18 @@ namespace src.Player
         private static readonly int AnimHorizontal = Animator.StringToHash("AnimHorizontal");
         private static readonly int AnimVertical = Animator.StringToHash("AnimVertical");
         private static readonly int AnimDeath = Animator.StringToHash("AnimDeath");
-        
+
+
+        protected void Awake()
+        {
+            _playerUpgrade = gameObject.AddComponent<PlayerUpgrade>();
+        }
 
         protected void Start()
         {   
             _gameStateManager = GameStateManager.instance;
-            _playerUpgrade = PlayerUpgrade.instance;
             _bombsUtil = BombsUtilManager.instance;
-            
+
             _rigidbody2d = GetComponent<Rigidbody2D>();
             _collider2D = GetComponent<Collider2D>();
             _animator = GetComponentInChildren<Animator>();

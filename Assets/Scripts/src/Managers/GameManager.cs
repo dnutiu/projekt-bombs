@@ -37,7 +37,6 @@ namespace src.Managers
             _gameStateManager = gameObject.AddComponent<GameStateManager>();
             _levelManager = gameObject.AddComponent<LevelManager>();
             _upgradeManager = gameObject.AddComponent<UpgradeManager>();
-            gameObject.AddComponent<PlayerUpgrade>();
 
             // Load external components
             _playerController = GameObject.Find("Player").GetComponent<PlayerController>();

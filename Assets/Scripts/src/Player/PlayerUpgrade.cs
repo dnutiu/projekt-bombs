@@ -4,23 +4,13 @@ namespace src.Player
 {
     public class PlayerUpgrade : GameplayComponent
     {
+        /* Events & Delegates */
         public delegate void IncreaseSpeedDelegate(float speed);
-        public static PlayerUpgrade instance;
         public event IncreaseSpeedDelegate PlayerSpeed;
+        
+        /* Variables */
         public const float MaxPlayerSpeed = 8f;
         private float _movementSpeed = 4f;
-
-        public void Awake()
-        {
-            if (instance == null)
-            {
-                instance = this;
-            }
-            else if (instance != null)
-            {
-                Destroy(gameObject);
-            }
-        }
 
         public float GetMovementSpeed()
         {
