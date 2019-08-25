@@ -1,39 +1,50 @@
-﻿using src.Ammo;
+﻿using System;
+using System.ComponentModel;
 using src.Base;
 using src.Helpers;
 using src.Managers;
 using UnityEngine;
+using UnityStandardAssets.CrossPlatformInput;
 
 namespace src.Player
 {
     public class PlayerController : GameplayComponent, IExplosable
     {
+        public bool godMode;
+        public float movementSpeed = 4f;
+        
+        /* Components */
         private GameStateManager _gameStateManager;
         private Rigidbody2D _rigidbody2d;
         private Collider2D _collider2D;
         private Transform _respawnPosition;
-        private BombsSpawner _bombsSpawner;
+        private BombsUtilManager _bombsUtil;
         private Animator _animator;
         private PlayerUpgrade _playerUpgrade;
+        
+        /* Variables */
+        private bool _isDead;
+        
+        /* Animator Variables*/
         private static readonly int AnimHorizontal = Animator.StringToHash("AnimHorizontal");
         private static readonly int AnimVertical = Animator.StringToHash("AnimVertical");
         private static readonly int AnimDeath = Animator.StringToHash("AnimDeath");
 
 
-        public bool godMode;
-        public float movementSpeed = 4f;
-        private bool _isDead;
+        protected void Awake()
+        {
+            _playerUpgrade = gameObject.AddComponent<PlayerUpgrade>();
+        }
 
         protected void Start()
         {   
             _gameStateManager = GameStateManager.instance;
-            _playerUpgrade = PlayerUpgrade.instance;
-            
+            _bombsUtil = BombsUtilManager.instance;
+
             _rigidbody2d = GetComponent<Rigidbody2D>();
             _collider2D = GetComponent<Collider2D>();
             _animator = GetComponentInChildren<Animator>();
             _respawnPosition = GameObject.Find("RespawnPosition").transform;
-            _bombsSpawner = GameObject.Find("BombSpawner").GetComponent<BombsSpawner>();
 
             movementSpeed = _playerUpgrade.GetMovementSpeed();
             _playerUpgrade.PlayerSpeed += OnSpeedUpgrade;
@@ -53,15 +64,50 @@ namespace src.Player
         private void Update()
         {
             if (_gameStateManager.IsGamePaused || _gameStateManager.IsPlayerMovementForbidden || _isDead) {return;}
-            HandleBombInput();
+            HandleItemsInput();
         }
 
         private void HandleMovementInput()
         {
 #if UNITY_STANDALONE || UNITY_WEBGL || UNITY_EDITOR
+            HandleKeyboardMovement();
+#elif UNITY_IOS || UNITY_ANDROID
+            HandleTouchMovement();
+#elif UNITY_PS4 || UNITY_XBOXONE
+            HandlerControllerMovement();
+#endif
+        }
+
+        private void HandleItemsInput()
+        {
+#if UNITY_EDITOR || UNITY_STANDALONE || UNITY_WEBGL
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                PlaceBomb();
+            }
+#elif UNITY_IOS || UNITY_ANDROID
+            if (CrossPlatformInputManager.GetButton("PlaceBomb"))
+            {
+                PlaceBomb();
+            }
+#elif UNITY_PS4 || UNITY_XBOXONE
+            // Console bomb placement is not supported yet.
+#endif
+        }
+        
+#if UNITY_STANDALONE || UNITY_WEBGL || UNITY_EDITOR
+        private void HandleKeyboardMovement()
+        {
             var horizontal = Input.GetAxisRaw("Horizontal");
             var vertical = Input.GetAxisRaw("Vertical");
-#elif UNITY_IOS || UNITY_ANDROID
+            var movementVector = new Vector2(horizontal, vertical);
+            MovePosition(movementVector);
+        }
+#endif
+        
+#if UNITY_IOS || UNITY_ANDROID
+        private void HandleTouchMovement()
+        {
             var horizontal = 0;
             var vertical = 0;
             if (CrossPlatformInputManager.GetButton("MoveUp"))
@@ -80,50 +126,60 @@ namespace src.Player
             {
                 horizontal = -1;
             }
-#elif UNITY_PS4 || UNITY_XBOXONE
-//    // Console movement is not supported yet.
+            var movementVector = new Vector2(horizontal, vertical);
+            MovePosition(movementVector);
+        }
 #endif
 
-            var movementVector = new Vector2(horizontal, vertical).NormalizeToCross();
-
+#if UNITY_PS4 || UNITY_XBOXONE
+        private void HandlerControllerMovement()
+        {
+            throw new NotImplementedException();
+        }
+#endif
+        
+        private void MovePosition(Vector2 movementVector)
+        {
+            movementVector = movementVector.NormalizeToCross();
             _animator.SetFloat(AnimHorizontal, movementVector.x);
             _animator.SetFloat(AnimVertical, movementVector.y);
-
-
             _rigidbody2d.MovePosition(_rigidbody2d.position + movementSpeed * Time.deltaTime * movementVector);
         }
 
         private void PlaceBomb()
         {
-            _bombsSpawner.PlaceBomb(transform);
+            var position = transform.position;
+            var absX = Mathf.RoundToInt(position.x);
+            var absY = Mathf.RoundToInt(position.y);
+            var newPosition = new Vector2(absX, absY);
+            if (!_bombsUtil.CanPlaceBomb(newPosition)) return;
+            
+            Instantiate(PrefabAtlas.Bomb, newPosition, Quaternion.identity);
+            _bombsUtil.RegisterBomb(newPosition);
         }
-
-        private void HandleBombInput()
-        {
-#if UNITY_EDITOR || UNITY_STANDALONE || UNITY_WEBGL
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                PlaceBomb();
-            }
-#elif UNITY_IOS || UNITY_ANDROID
-            if (CrossPlatformInputManager.GetButton("PlaceBomb"))
-            {
-                PlaceBomb();
-            }
-#elif UNITY_PS4 || UNITY_XBOXONE
-            // Console bomb placement is not supported yet.
-#endif
-        }
-
+        
         public void Respawn()
         {
-            DebugHelper.LogInfo("Player is respawning!");
+            DebugHelper.LogInfo("Player is re-spawning!");
             transform.SetPositionAndRotation(_respawnPosition.position, Quaternion.identity);
             _animator.Play("IdleDown");
+        }
+        
+        private void Die()
+        {
+            if (godMode)
+            {
+                return;
+            }
+            _isDead = true;
+            _collider2D.enabled = false;
+            _animator.SetBool(AnimDeath, true);
+            Destroy(gameObject, 0.7f);
         }
 
         public void OnTriggerExit2D(Collider2D other)
         {
+            /* Turn off bomb trigger making it so you can't pass through. */
             if (other.CompareTag("Bomb"))
             {
                 other.isTrigger = false;
@@ -140,18 +196,6 @@ namespace src.Player
             {
                 OnContactWithEnemy();
             }
-        }
-
-        private void Die()
-        {
-            if (godMode)
-            {
-                return;
-            }
-            _isDead = true;
-            _collider2D.enabled = false;
-            _animator.SetBool(AnimDeath, true);
-            Destroy(gameObject, 0.7f);
         }
 
         public void OnExplosion()

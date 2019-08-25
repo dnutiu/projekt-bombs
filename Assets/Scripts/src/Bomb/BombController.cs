@@ -4,29 +4,28 @@ using src.Helpers;
 using src.Managers;
 using UnityEngine;
 
-namespace src.Ammo
+namespace src.Bomb
 {
     public class BombController : GameplayComponent, IExplosable
     {
-        public GameObject explosionPrefab;
-
-        private BombCameraShake _cameraShake;
         private readonly BombsUtilManager _bombsUtil = BombsUtilManager.instance;
+        private BombCameraShake _cameraShake;
+        private SpriteRenderer _spriteRenderer;
         private bool _exploded;
 
         // Start is called before the first frame update
-        void Start()
+        private void Start()
         {
             _cameraShake = GameObject.Find("VCAM1").GetComponent<BombCameraShake>();
-            Invoke(nameof(Explode), _bombsUtil.Timer);
+            _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+            Invoke(nameof(Explode), _bombsUtil.timer);
         }
 
-        void Explode()
+        private void Explode()
         {
-            Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+            Instantiate(PrefabAtlas.BombExplosion, transform.position, Quaternion.identity);
 
-            GetComponentInChildren<SpriteRenderer>().enabled = false;
-
+            _spriteRenderer.enabled = false;
             _cameraShake.StartCameraShakeCoro();
             StartCoroutine(CreateExplosions(Vector3.down));
             StartCoroutine(CreateExplosions(Vector3.left));
@@ -42,19 +41,18 @@ namespace src.Ammo
         private IEnumerator CreateExplosions(Vector3 direction)
         {
             var currentPosition = transform.position;
-            for (var i = 1; i < _bombsUtil.Power; i++)
+            for (var i = 1; i < _bombsUtil.power; i++)
             {
                 var hit = Physics2D.Raycast(new Vector2(currentPosition.x + 0.5f,
                         currentPosition.y + 0.5f), direction, i, 1 << 8);
 
                 if (!hit.collider)
                 {
-                    Instantiate(explosionPrefab, transform.position + i * direction,
-                        explosionPrefab.transform.rotation);
+                    Instantiate(PrefabAtlas.BombExplosion, transform.position + i * direction,
+                        PrefabAtlas.BombExplosion.transform.rotation);
                 }
                 else
                 {
-                    Debug.Log("Hit something");
                     var key = hit.collider.GetComponent<IExplosable>();
                     key?.OnExplosion();
                     break;
@@ -79,8 +77,8 @@ namespace src.Ammo
         }
 
         public void OnDestroy()
-        {
-            _bombsUtil.RemoveBomb(transform.position);
+        { 
+            _bombsUtil.UnregisterBomb(transform.position);
         }
     }
 }

@@ -4,7 +4,7 @@ using src.Base;
 using src.Managers;
 using UnityEngine;
 
-namespace src.Ammo
+namespace src.Bomb
 {
     public class BombCameraShake : GameplayComponent
     {
@@ -30,7 +30,7 @@ namespace src.Ammo
         private IEnumerator _startCameraShake()
         {
             SetCameraNoise(amplitudeGain, frequencyGain);
-            yield return new WaitForSeconds(_bombsUtilManager.ExplosionDuration);
+            yield return new WaitForSeconds(_bombsUtilManager.explosionDuration);
             SetCameraNoise(0, 0);
         }
 
