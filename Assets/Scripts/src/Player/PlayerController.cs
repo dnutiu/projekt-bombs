@@ -18,10 +18,10 @@ namespace src.Player
         private Rigidbody2D _rigidbody2d;
         private Collider2D _collider2D;
         private Transform _respawnPosition;
-        private BombsUtilManager _bombsUtil;
+        private BombsUtilManager _bombsUtilManager;
         private Animator _animator;
         private PlayerUpgrade _playerUpgrade;
-        
+
         /* Variables */
         private bool _isDead;
         
@@ -34,12 +34,12 @@ namespace src.Player
         protected void Awake()
         {
             _playerUpgrade = gameObject.AddComponent<PlayerUpgrade>();
+            _bombsUtilManager = gameObject.AddComponent<BombsUtilManager>();
         }
 
         protected void Start()
-        {   
+        {
             _gameStateManager = GameStateManager.instance;
-            _bombsUtil = BombsUtilManager.instance;
 
             _rigidbody2d = GetComponent<Rigidbody2D>();
             _collider2D = GetComponent<Collider2D>();
@@ -152,10 +152,10 @@ namespace src.Player
             var absX = Mathf.RoundToInt(position.x);
             var absY = Mathf.RoundToInt(position.y);
             var newPosition = new Vector2(absX, absY);
-            if (!_bombsUtil.CanPlaceBomb(newPosition)) return;
+            if (!_bombsUtilManager.CanPlaceBomb(newPosition)) return;
             
             Instantiate(PrefabAtlas.Bomb, newPosition, Quaternion.identity);
-            _bombsUtil.RegisterBomb(newPosition);
+            _bombsUtilManager.RegisterBomb(newPosition);
         }
         
         public void Respawn()

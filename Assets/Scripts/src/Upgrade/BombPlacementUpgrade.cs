@@ -1,4 +1,5 @@
 using src.Base;
+using src.Managers;
 
 namespace src.Upgrade
 {
@@ -6,7 +7,7 @@ namespace src.Upgrade
     {
         public override void PerformUpgrade()
         {
-            var bombManager = gameManager.GetBombsUtilManager();
+            var bombManager = _playerToUpgrade.GetComponent<BombsUtilManager>();
             bombManager.IncreaseAllowedBombs();
         }
     }
