@@ -16,7 +16,6 @@ namespace src.Managers
         private GameStateManager _gameStateManager;
         private LevelManager _levelManager;
         private UpgradeManager _upgradeManager;
-        private BombsUtilManager _bombsUtilManager;
 
         public void Awake()
         {
@@ -33,7 +32,6 @@ namespace src.Managers
             DontDestroyOnLoad(gameObject);
 
             // Load singletons
-            _bombsUtilManager = gameObject.AddComponent<BombsUtilManager>();
             _gameStateManager = gameObject.AddComponent<GameStateManager>();
             _levelManager = gameObject.AddComponent<LevelManager>();
             _upgradeManager = gameObject.AddComponent<UpgradeManager>();
@@ -63,12 +61,7 @@ namespace src.Managers
         {
             return _upgradeManager;
         }
-
-        public BombsUtilManager GetBombsUtilManager()
-        {
-            return _bombsUtilManager;
-        }
-
+        
         private IEnumerator PreInitGame()
         {
             var preStageUi = Instantiate(PrefabAtlas.PreStageUi); // Will destroy itself.

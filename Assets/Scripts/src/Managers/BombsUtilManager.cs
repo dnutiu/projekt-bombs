@@ -15,7 +15,7 @@ namespace src.Managers
         public float explosionDuration = 0.55f;
 
         
-        private readonly HashSet<Vector3> _usedPosition = new HashSet<Vector3>();
+        private static readonly HashSet<Vector3> UsedPosition = new HashSet<Vector3>();
         private const int MaxPower = 7;
         private const int MaxAllowedBombs = 10;
         
@@ -51,19 +51,19 @@ namespace src.Managers
         {
             if (!CanPlaceBomb(position)) return;
             placedBombs++;
-            _usedPosition.Add(position);
+            UsedPosition.Add(position);
         }
 
         public void UnregisterBomb(Vector3 position)
         {
-            if (!_usedPosition.Contains(position)) return;
+            if (!UsedPosition.Contains(position)) return;
             placedBombs--;
-            _usedPosition.Remove(position);
+            UsedPosition.Remove(position);
         }
 
         public bool CanPlaceBomb(Vector3 position)
         {
-            return !_usedPosition.Contains(position) && placedBombs < allowedBombs;
+            return !UsedPosition.Contains(position) && placedBombs < allowedBombs;
         }
     }
 }
