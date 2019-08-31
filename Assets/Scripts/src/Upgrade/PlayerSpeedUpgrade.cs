@@ -7,7 +7,7 @@ namespace src.Upgrade
     {
         public override void PerformUpgrade()
         {
-            var player = _playerToUpgrade.GetComponent<PlayerUpgrade>();
+            var player = PlayerToUpgrade.GetComponent<PlayerUpgrade>();
             player.IncreaseSpeed(.5f);
         }
     }

@@ -12,7 +12,7 @@ namespace src.Wall
 
         private void Start()
         {
-            _gameManager = GameManager.instance;
+            _gameManager = GameManager.Instance;
         }
 
         /* Trigger the next level and destroy itself. */

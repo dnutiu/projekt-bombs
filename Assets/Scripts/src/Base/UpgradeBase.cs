@@ -8,13 +8,11 @@ namespace src.Base
 {
     public class UpgradeBase : GameplayComponent, IUpgrade
     {
-        protected GameManager gameManager;
         private UpgradeManager _upgradeManager;
-        protected PlayerController _playerToUpgrade;
+        protected PlayerController PlayerToUpgrade;
 
         public void Start()
         {
-            gameManager = GameManager.instance;
             _upgradeManager = UpgradeManager.instance;
         }
 
@@ -26,7 +24,7 @@ namespace src.Base
         public void OnTriggerEnter2D(Collider2D other)
         {
             if (!other.CompareTag("Player")) return;
-            _playerToUpgrade = other.GetComponent<PlayerController>();
+            PlayerToUpgrade = other.GetComponent<PlayerController>();
             PerformUpgrade();
             _upgradeManager.ClaimUpgrade(gameObject);
             Destroy(gameObject);

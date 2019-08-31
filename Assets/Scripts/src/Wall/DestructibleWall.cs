@@ -16,7 +16,7 @@ namespace src.Wall
 
         private void Start()
         {
-            _upgradeManager = GameManager.instance.GetUpgradeManager();
+            _upgradeManager = GameManager.Instance.GetUpgradeManager();
             _explosionPrefab = PrefabAtlas.BombExplosion;
             _exitDoorPrefab = PrefabAtlas.ExitDoor;
         }

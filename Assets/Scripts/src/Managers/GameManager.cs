@@ -9,7 +9,7 @@ namespace src.Managers
 {
     public class GameManager : MonoBehaviour
     {
-        public static GameManager instance;
+        public static GameManager Instance;
         
         // Inner Components
         private PlayerController _playerController;
@@ -19,11 +19,11 @@ namespace src.Managers
 
         public void Awake()
         {
-            if (instance == null)
+            if (Instance == null)
             {
-                instance = this;
+                Instance = this;
             }
-            else if (instance != null)
+            else if (Instance != null)
             {
                 Destroy(gameObject);
             }

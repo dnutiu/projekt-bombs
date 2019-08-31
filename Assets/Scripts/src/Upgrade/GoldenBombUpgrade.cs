@@ -8,7 +8,7 @@ namespace src.Upgrade
     {
         public override void PerformUpgrade()
         {
-            var bombManager = _playerToUpgrade.GetComponent<BombsUtilManager>();
+            var bombManager = PlayerToUpgrade.GetComponent<BombsUtilManager>();
             bombManager.IncreaseAllowedBombs();
             bombManager.IncreasePower();
         }
