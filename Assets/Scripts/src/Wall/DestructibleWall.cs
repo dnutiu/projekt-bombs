@@ -11,14 +11,14 @@ namespace src.Wall
         private bool _spawnExit;
         private bool _spawnUpgrade;
         private UpgradeManager _upgradeManager;
-        private GameObject explosionPrefab;
-        private GameObject exitDoorPrefab;
+        private GameObject _explosionPrefab;
+        private GameObject _exitDoorPrefab;
 
         private void Start()
         {
             _upgradeManager = GameManager.instance.GetUpgradeManager();
-            explosionPrefab = PrefabAtlas.BombExplosion;
-            exitDoorPrefab = PrefabAtlas.ExitDoor;
+            _explosionPrefab = PrefabAtlas.BombExplosion;
+            _exitDoorPrefab = PrefabAtlas.ExitDoor;
         }
 
         public void SpawnsExit()
@@ -38,11 +38,11 @@ namespace src.Wall
         {
             var currentPosition = transform.position;
             Destroy(GetComponent<SpriteRenderer>());
-            Instantiate(explosionPrefab, currentPosition, Quaternion.identity);
+            Instantiate(_explosionPrefab, currentPosition, Quaternion.identity);
             if (_spawnExit)
             {
                 DebugHelper.LogInfo($"Destructible spawned exit {transform.position}");
-                Instantiate(exitDoorPrefab, currentPosition, Quaternion.identity);
+                Instantiate(_exitDoorPrefab, currentPosition, Quaternion.identity);
             }
             else if (_spawnUpgrade)
             {
