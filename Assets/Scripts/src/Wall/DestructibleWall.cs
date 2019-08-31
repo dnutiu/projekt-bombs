@@ -11,12 +11,14 @@ namespace src.Wall
         private bool _spawnExit;
         private bool _spawnUpgrade;
         private UpgradeManager _upgradeManager;
-        public GameObject explosionPrefab;
-        public GameObject exitDoorPrefab;
+        private GameObject explosionPrefab;
+        private GameObject exitDoorPrefab;
 
         private void Start()
         {
             _upgradeManager = GameManager.instance.GetUpgradeManager();
+            explosionPrefab = PrefabAtlas.BombExplosion;
+            exitDoorPrefab = PrefabAtlas.ExitDoor;
         }
 
         public void SpawnsExit()

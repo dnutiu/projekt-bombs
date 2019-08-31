@@ -31,6 +31,8 @@ namespace src.Helpers
             Resources.Load<GameObject>("Items/Bomb");
         public static readonly GameObject BombExplosion = 
             Resources.Load<GameObject>("Items/BombExplosion");
+        public static readonly GameObject ExitDoor =
+            Resources.Load<GameObject>("Items/ExitDoor");
 
         /* Enemies */
         public static readonly GameObject GreenEnemy = Resources.Load<GameObject>("Enemies/SnowEnemyRandom");
