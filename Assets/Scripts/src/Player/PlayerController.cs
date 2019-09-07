@@ -161,6 +161,9 @@ namespace src.Player
         public void Respawn()
         {
             DebugHelper.LogInfo("Player is re-spawning!");
+            _isDead = false;
+            _collider2D.enabled = true;
+            _animator.SetBool(AnimDeath, false);
             transform.SetPositionAndRotation(_respawnPosition.position, Quaternion.identity);
             _animator.Play("IdleDown");
         }
@@ -174,7 +177,7 @@ namespace src.Player
             _isDead = true;
             _collider2D.enabled = false;
             _animator.SetBool(AnimDeath, true);
-            Destroy(gameObject, 0.7f);
+            GameManager.Instance.StartGameOver();
         }
 
         public void OnTriggerExit2D(Collider2D other)

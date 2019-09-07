@@ -27,6 +27,11 @@ namespace src.Managers
             Level += 1;
         }
         
+        public void ResetLevel()
+        {
+            Level = 1;
+        }
+        
         
     }
 }

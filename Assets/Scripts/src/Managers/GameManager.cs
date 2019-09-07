@@ -4,6 +4,7 @@ using src.Level;
 using src.Level.src.Level;
 using src.Player;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace src.Managers
 {
@@ -85,6 +86,21 @@ namespace src.Managers
             {
                 ApplicationActions.HandlePauseKey();
             }
+        }
+        
+        private IEnumerator GameOver()
+        {
+            yield return new WaitForSeconds(4f);
+            _levelManager.DestroyLevel();
+            _upgradeManager.DestroyUnclaimedUpgrades();
+            _gameStateManager.ResetLevel();
+            StartLevel();
+            _playerController.Respawn();
+        }
+
+        public void StartGameOver()
+        {
+            StartCoroutine(GameOver());
         }
 
         public void StartNextLevel()
