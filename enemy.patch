@@ -1,0 +1,41 @@
+diff --git a/Assets/Scripts/src/Player/PlayerController.cs b/Assets/Scripts/src/Player/PlayerController.cs
+index 943f824..86df39d 100644
+--- a/Assets/Scripts/src/Player/PlayerController.cs
++++ b/Assets/Scripts/src/Player/PlayerController.cs
+@@ -185,17 +185,21 @@ namespace src.Player
+                 other.isTrigger = false;
+             }
+         }
+-        
++
++        public void OnCollisionEnter2D(Collision2D other)
++        {
++            if (other.collider.CompareTag("Enemy"))
++            {
++                OnContactWithEnemy();
++            }
++        }
++
+         public void OnTriggerEnter2D(Collider2D other)
+         {
+             if (other.CompareTag("Explosion"))
+             {
+                 OnExplosion();
+             }
+-            if (other.CompareTag("Enemy"))
+-            {
+-                OnContactWithEnemy();
+-            }
+         }
+ 
+         public void OnExplosion()
+diff --git a/ProjectSettings/Physics2DSettings.asset b/ProjectSettings/Physics2DSettings.asset
+index 8c8f397..07be3db 100644
+--- a/ProjectSettings/Physics2DSettings.asset
++++ b/ProjectSettings/Physics2DSettings.asset
+@@ -53,4 +53,4 @@ Physics2DSettings:
+   m_ColliderAsleepColor: {r: 0.5686275, g: 0.95686275, b: 0.54509807, a: 0.36078432}
+   m_ColliderContactColor: {r: 1, g: 0, b: 1, a: 0.6862745}
+   m_ColliderAABBColor: {r: 1, g: 1, b: 0, a: 0.2509804}
+-  m_LayerCollisionMatrix: fffbffffff3bffffff3bffffffffffffff3bfffffffbfffffffffffffffffffffffbffffffffffffc80affffffffffffff7bfffffffbffffe93bffffe9abffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
++  m_LayerCollisionMatrix: fffbffffff3bffffff3bffffffffffffff3bfffffffbfffffffffffffffffffffffbffffffffffffc80affffffffffffff7bfffffffbffffe9bbffffe9ebffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff

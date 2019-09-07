@@ -185,16 +185,20 @@ namespace src.Player
                 other.isTrigger = false;
             }
         }
-        
+
+        public void OnCollisionEnter2D(Collision2D other)
+        {
+            if (other.collider.CompareTag("Enemy"))
+            {
+                OnContactWithEnemy();
+            }
+        }
+
         public void OnTriggerEnter2D(Collider2D other)
         {
             if (other.CompareTag("Explosion"))
             {
                 OnExplosion();
-            }
-            if (other.CompareTag("Enemy"))
-            {
-                OnContactWithEnemy();
             }
         }
 
